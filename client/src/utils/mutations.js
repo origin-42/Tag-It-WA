@@ -29,3 +29,33 @@ export const ADD_USER = gql`
     }
   }
 `;
+
+export const ADD_TAG = gql`
+  mutation addTag(
+    $lat: Float!
+    $lng: Float!
+    $date: Int!
+    $criteria: String!
+    $description: String!
+    $active: Boolean!
+    $resolved: Boolean!
+    $notifyUser: Boolean!
+    $confirmed: Int!
+    $denied: Int!
+  ) {
+    addTag(
+      lat: $lat
+      lng: $lng
+      date: $date
+      criteria: $criteria
+      description: $description
+      active: $active
+      resolved: $resolved
+      notifyUser: $notifyUser
+      confirmed: $confirmed
+      denied: $denied
+    ) {
+      tag
+    }
+  }
+`;

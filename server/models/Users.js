@@ -22,7 +22,7 @@ const usersSchema = new Schema({
         minlength: 5
     },
     tags: [Tags.schema],
-    comments: [Comments.schema]
+    comments: [Comments.schema],
 });
 
 usersSchema.pre('save', async function(next) {

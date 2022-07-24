@@ -1,0 +1,4 @@
+a:hover, li:hover {
+    color: rgb(22, 37, 243);
+    text-decoration: underline;
+}

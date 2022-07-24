@@ -1,6 +1,9 @@
 import './css/reset.css';
+import './css/fonts.css';
+import './css/animations.css';
 import { Header } from './components/Header';
-import { Footer } from './components/Footer';
+import { Report } from './pages/Report';
+import { Issues } from './pages/Issues';
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
@@ -38,17 +41,20 @@ function App() {
       <Router>
         <main>
           <Header />
-          <Routes>
-            <Route
-              path="/"
-              element={<h1>Hello World!</h1>}
-            />
-            <Route
-              path="/dashboard"
-              element={<h1>Dashboard!</h1>}
-            />
-          </Routes>
-          <Footer />
+            <Routes>
+              <Route
+                path="/"
+                element={<Report />}
+              />
+              <Route
+                path="/dashboard"
+                element={<h1>Dashboard!</h1>}
+              />
+              <Route 
+                path="/Issues"
+                element={<Issues />}
+              />
+            </Routes>
         </main>
       </Router>
     </ApolloProvider>

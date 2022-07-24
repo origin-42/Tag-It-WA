@@ -11,9 +11,9 @@ const typeDefs = gql`
 
     type Tag {
         _id: ID
-        address: String
-        geolocation: String
-        googleLocationID: String
+        lat: Float 
+        lng: Float 
+        date: Int
         criteria: String
         description: String
         active: Boolean
@@ -66,10 +66,10 @@ const typeDefs = gql`
         ): Auth
         
         addTag(
-            address: String 
-            geolocation: String
-            googleLocationID: String
-            criteria: String!
+            lat: Float
+            lng: Float
+            date: Int
+            criteria: String
             description: String
             active: Boolean
             resolved: Boolean

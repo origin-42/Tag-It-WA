@@ -3,14 +3,14 @@ const { Schema } = mongoose;
 const Comments = require('./Comments');
 
 const tagsSchema = new Schema({
-  address: {
-    type: String
+  lat: {
+    type: Number
   },
-  geolocation: {
-    type: String
+  lng: {
+    type: Number
   },
-  googleLocationID: {
-    type: String
+  date: {
+    type: Number
   },
   criteria: {
     type: String,
