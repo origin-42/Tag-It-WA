@@ -11,7 +11,7 @@ export const Issues = () => {
     const [details, changeDetails] = useState({
         lat: coords.lat,
         lng: coords.lng,
-        date: coords.date,
+        date: Date.now,
         criteria: "",
         description: "",
         active: true,
@@ -25,7 +25,7 @@ export const Issues = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-       
+
         if (!details.criteria) {
             alert("Please add criteria")
         }
@@ -43,7 +43,7 @@ export const Issues = () => {
         }
 
         console.log(details)
-        // window.location.replace("/dashboard");
+        window.location.replace("/dashboard");
     }
 
     const handleNotifications = (e) => {

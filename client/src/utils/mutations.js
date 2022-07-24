@@ -32,16 +32,16 @@ export const ADD_USER = gql`
 
 export const ADD_TAG = gql`
   mutation addTag(
-    $lat: Float!
-    $lng: Float!
-    $date: Int!
+    $lat: Float
+    $lng: Float
+    $date: String
     $criteria: String!
-    $description: String!
-    $active: Boolean!
-    $resolved: Boolean!
-    $notifyUser: Boolean!
-    $confirmed: Int!
-    $denied: Int!
+    $description: String
+    $active: Boolean
+    $resolved: Boolean
+    $notifyUser: Boolean
+    $confirmed: Int
+    $denied: Int
   ) {
     addTag(
       lat: $lat
@@ -55,7 +55,29 @@ export const ADD_TAG = gql`
       confirmed: $confirmed
       denied: $denied
     ) {
-      tag
+      _id
+    }
+  }
+`;
+
+export const UPDATE_TAG = gql`
+  mutation updateDate(
+    $_id: ID!
+    $active: Boolean
+    $resolved: Boolean
+    $confirmed: Int
+    $denied: Int 
+  ) {
+    updateDate(
+      _id: $_id
+      active: $active
+      resolved: $resolved
+      confirmed: $confirmed
+      denied: $denied
+    ) {
+      Tag {
+        active
+      }
     }
   }
 `;

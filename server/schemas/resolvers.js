@@ -9,8 +9,9 @@ const resolvers = {
 
         // Find a user
         user: async (parent, args, context) => {
+            console.log(context.user)
             if (context.user) {
-              const user = await Users.findById(context.user.id);
+              const user = await Users.findById(context.user._id).populate('tags').populate('comments');
       
               return user;
             }
@@ -87,13 +88,14 @@ const resolvers = {
 
         // Add a new tag
         addTag: async (parent, args, context) => {
+            console.log(args)
             if (context.user) {
                 const tag = new Tags({ ...args });
 
                 await Users.findByIdAndUpdate(context.user.id, {
                     $push: { tags: tag },
                 });
-
+              
                 return tag;
             }
             

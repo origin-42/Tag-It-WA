@@ -14,8 +14,9 @@ export const Login = () => {
           const mutationResponse = await loginUser({
             variables: { username: formState.username, password: formState.password },
           });
+          
           const token = mutationResponse.data.login.token;
-          Auth.login(token);
+          Auth.login(mutationResponse.data.login.user._id, token);
         } catch (e) {
           console.log(e);
         }

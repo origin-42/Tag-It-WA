@@ -4,6 +4,10 @@ import './css/animations.css';
 import { Header } from './components/Header';
 import { Report } from './pages/Report';
 import { Issues } from './pages/Issues';
+import { Dashboard } from './pages/Dashboard';
+import { MoreInfo } from './components/MoreInfo';
+import { CommentInfo } from './components/CommentInfo';
+import { ManageAlerts } from './pages/ManageAlerts';
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
@@ -48,11 +52,23 @@ function App() {
               />
               <Route
                 path="/dashboard"
-                element={<h1>Dashboard!</h1>}
+                element={<Dashboard />}
               />
               <Route 
                 path="/Issues"
                 element={<Issues />}
+              />
+              <Route 
+                path="/moreInfo"
+                element={<MoreInfo />}
+              />
+              <Route 
+                path="/commentInfo"
+                element={<CommentInfo />}
+              />
+              <Route 
+                path="/manageAlerts"
+                element={<ManageAlerts />}
               />
             </Routes>
         </main>

@@ -10,7 +10,8 @@ const tagsSchema = new Schema({
     type: Number
   },
   date: {
-    type: Number
+    type: Date,
+    default: Date.now
   },
   criteria: {
     type: String,

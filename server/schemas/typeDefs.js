@@ -13,8 +13,8 @@ const typeDefs = gql`
         _id: ID
         lat: Float 
         lng: Float 
-        date: Int
-        criteria: String
+        date: String
+        criteria: String!
         description: String
         active: Boolean
         resolved: Boolean
@@ -22,6 +22,7 @@ const typeDefs = gql`
         confirmed: Int
         denied: Int
         user: User
+        comments: [ Comment ]
     }
 
     type Comment {
@@ -68,8 +69,8 @@ const typeDefs = gql`
         addTag(
             lat: Float
             lng: Float
-            date: Int
-            criteria: String
+            date: String
+            criteria: String!
             description: String
             active: Boolean
             resolved: Boolean
