@@ -17,7 +17,8 @@ export const Signup = () => {
           },
         });
         const token = mutationResponse.data.addUser.token;
-        Auth.login(token);
+        
+        Auth.login(mutationResponse.data.addUser.user._id, token);
     };
 
     const handleChange = (event) => {

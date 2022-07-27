@@ -1,6 +1,6 @@
 export const MoreInfo = () => {
     
     return (
-        <h2>Tags info</h2>
+        <h2>Moreinfo</h2>
     )
 }

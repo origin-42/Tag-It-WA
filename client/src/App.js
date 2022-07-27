@@ -8,6 +8,7 @@ import { Dashboard } from './pages/Dashboard';
 import { MoreInfo } from './components/MoreInfo';
 import { CommentInfo } from './components/CommentInfo';
 import { ManageAlerts } from './pages/ManageAlerts';
+import { AltUserTag } from './components/altUserTag';
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
@@ -69,6 +70,10 @@ function App() {
               <Route 
                 path="/manageAlerts"
                 element={<ManageAlerts />}
+              />
+              <Route 
+                path="/altUserTag"
+                element={<AltUserTag />}
               />
             </Routes>
         </main>

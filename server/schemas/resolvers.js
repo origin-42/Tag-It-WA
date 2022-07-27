@@ -9,12 +9,24 @@ const resolvers = {
 
         // Find a user
         user: async (parent, args, context) => {
-            console.log(context.user)
+           
             if (context.user) {
               const user = await Users.findById(context.user._id).populate('tags').populate('comments');
-      
+    
               return user;
             }
+        },
+
+        queryAUser: async (parent, { _id }) => {
+            
+            if (_id) {
+                const user = Users.findById(_id).populate('tags').populate('comments');
+
+                return user
+            }
+
+            return
+
         },
 
         // Get all tags
@@ -22,9 +34,24 @@ const resolvers = {
 
         // Find a tag
         tag: async (parent, { _id }) => {
-            const tag = await Tags.findById(_id);
 
-            return tag
+            try {
+
+                const tag = await Tags.findById(_id);
+                console.log(tag)
+                return tag
+
+            } catch (err) {
+                console.log(err)
+            }
+
+        },
+
+        getCriteria: async (parent, { criteria }) => {
+ 
+            const tags = await Tags.find({ criteria })
+     
+            return tags
         },
 
         // Get all comments
@@ -70,11 +97,10 @@ const resolvers = {
 
         login: async (parent, { username, password }) => {
             const user = await Users.findOne({ username });
-      
+    
             if (!user) {
               throw new AuthenticationError('Incorrect credentials');
             }
-      
             const correctPw = await user.isCorrectPassword(password);
       
             if (!correctPw) {
@@ -88,14 +114,14 @@ const resolvers = {
 
         // Add a new tag
         addTag: async (parent, args, context) => {
-            console.log(args)
+        
             if (context.user) {
-                const tag = new Tags({ ...args });
+                const tag = await Tags.create(args);
 
-                await Users.findByIdAndUpdate(context.user.id, {
+                await Users.findByIdAndUpdate(context.user._id, {
                     $push: { tags: tag },
                 });
-              
+    
                 return tag;
             }
             
@@ -122,15 +148,28 @@ const resolvers = {
 
         // Add a new comment
         addComment: async (parent, args, context) => {
+
             if (context.user) {
-                const comment = new Comments(args.description);
-
+                const newComment = {
+                    description: args.description,
+                    user: args.user,
+                    tag: args._id,
+                    repliedUser: args.repliedUser || null,
+                    date: Date.now()
+                }
+                await Comments.create(newComment);
                 await Tags.findByIdAndUpdate(args._id, {
-                    $push: { comments: comment },
+                    $push: { comments: newComment }
                 });
+                await Users.findByIdAndUpdate(context.user._id, {
+                    $push: { comments: newComment }
+                });
+                const updatedTag = Tags.findById(args._id);
 
-                return comment
+                return updatedTag
             }
+
+            return
         },
 
         // Remove a comment

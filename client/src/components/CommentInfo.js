@@ -1,6 +1,6 @@
-export const CommentInfo = () => {
+export const CommentInfo = ({commentInfo}) => {
     
     return (
-        <h2>Comments info</h2>
+        <h2>{commentInfo.description}</h2>
     )
 }

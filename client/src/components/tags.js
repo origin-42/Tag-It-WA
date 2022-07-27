@@ -3,8 +3,11 @@ import { useMutation } from "@apollo/client";
 import { UPDATE_TAG } from '../utils/mutations';
 import { Link } from 'react-router-dom';
 
-export const Tags = ({ tagInfo }) => {
-    const { isResolved, resolveTag } = useState(tagInfo.resolved);
+export const Tags = ({tagInfo, checkItems, checkedItems}) => {
+
+    const [ isResolved, resolveTag ] = useState(tagInfo.resolved);
+
+    // todo is checked
 
     const [ resolveTagData, { error } ] = useMutation(UPDATE_TAG);
 
@@ -19,16 +22,21 @@ export const Tags = ({ tagInfo }) => {
        resolveTag(true)
     }
 
-    const updateTagUsed = () => {
-        localStorage.setItem("currentTag", tagInfo._id)
+    const updateTagUsed = (id) => {
+        checkItems({ ...checkedItems, tagChecked: false })
+        localStorage.setItem("currentTag", id)
     }
 
-    return (
-        <article key={tagInfo._id} id={tagInfo._id} data-isChecked="false" onClick={updateTagUsed}>
+    const checkNewTag = (id) => {
+        checkItems({ ...checkedItems, tagChecked: id })
+    }
+
+    return (checkedItems.tagChecked === tagInfo._id ? (
+        <article id={tagInfo._id} onClick={() => updateTagUsed(tagInfo._id)}>
             <div>
                 <p>Criteria: {tagInfo.criteria}</p>
                 <p>Created: {tagInfo.date}</p>
-            </div>
+            </div>  
             <div>
                 {isResolved && <p data-resolved="true">Resolved: Yes</p>}
                 {!isResolved && (
@@ -49,5 +57,12 @@ export const Tags = ({ tagInfo }) => {
                 <button><Link to="/moreInfo">More Information</Link></button>
             </div>
         </article>
-    )
+    ) : (
+        <article id={tagInfo._id} onClick={() => checkNewTag(tagInfo._id)}>
+            <div>
+                <h3>{tagInfo.criteria}</h3>
+                <p>{tagInfo.date}</p>
+            </div>
+        </article>
+    ))
 }

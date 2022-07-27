@@ -15,7 +15,14 @@ const commentsSchema = new Schema({
     ref: 'tags',
     required: true,
   },
-  repliedUser: [ this ]
+  repliedUser: {
+    type: Schema.Types.ObjectId,
+    ref: 'users',
+  },
+  date: {
+    type: Date,
+    default: Date.now
+  }
 });
 
 const Comments = mongoose.model('Comments', commentsSchema);

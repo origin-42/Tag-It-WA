@@ -31,6 +31,7 @@ const typeDefs = gql`
         user: User
         tag: Tag
         repliedUser: User
+        date: String
     }
 
     type Auth {
@@ -40,8 +41,10 @@ const typeDefs = gql`
 
     type Query {
         user: User
+        queryAUser: User
         tags: [ Tag ]
-        tag( _id: ID! ): Tag 
+        tag( _id: ID ): Tag 
+        getCriteria( criteria: String! ): [ Tag ]
         comments: [ Comment ]
         comment( _id: ID! ): Comment 
     }
@@ -70,14 +73,14 @@ const typeDefs = gql`
             lat: Float
             lng: Float
             date: String
-            criteria: String!
+            criteria: String
             description: String
             active: Boolean
             resolved: Boolean
             notifyUser: Boolean
             confirmed: Int
             denied: Int 
-        ): User
+        ): Tag
 
         removeTag( _id: ID! ): Tag
         
@@ -89,7 +92,7 @@ const typeDefs = gql`
             denied: Int 
         ): Tag
 
-        addComment( tag: ID!, description: String! ): Tag
+        addComment( _id: ID!, description: String!, user: ID!, repliedUser: ID ): Tag
 
         removeComment( _id: ID! ): Comment
     }

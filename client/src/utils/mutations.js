@@ -35,7 +35,7 @@ export const ADD_TAG = gql`
     $lat: Float
     $lng: Float
     $date: String
-    $criteria: String!
+    $criteria: String
     $description: String
     $active: Boolean
     $resolved: Boolean
@@ -56,6 +56,7 @@ export const ADD_TAG = gql`
       denied: $denied
     ) {
       _id
+      criteria
     }
   }
 `;
@@ -77,6 +78,33 @@ export const UPDATE_TAG = gql`
     ) {
       Tag {
         active
+      }
+    }
+  }
+`;
+
+export const ADD_COMMENT = gql`
+  mutation addComment($_id: ID!, $description: String!, $user: ID!, $repliedUser: ID) {
+    addComment(_id: $_id, description: $description, user: $user, repliedUser: $repliedUser) {
+      _id
+      lat
+      lng
+      date
+      criteria
+      description
+      active
+      resolved
+      notifyUser
+      confirmed
+      denied
+      comments {
+          _id
+          description
+          user {
+              _id
+              username
+          }
+          date
       }
     }
   }
