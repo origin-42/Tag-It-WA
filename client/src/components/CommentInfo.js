@@ -58,7 +58,7 @@ export const CommentInfo = () => {
     } else if (loading) {
         return <div>Loading data</div>
     }
-console.log(data.tag)
+
     const changeComment = (event) => {
         const { name, value } = event.target;
         createComment({

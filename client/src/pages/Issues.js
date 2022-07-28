@@ -43,8 +43,7 @@ export const Issues = () => {
             alert("Error")
         }
 
-        console.log(details)
-        window.location.assign("/dashboard");
+        window.location.replace("/dashboard");
         
     }
 

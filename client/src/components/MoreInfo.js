@@ -68,7 +68,7 @@ export const MoreInfo = () => {
           [name]: value,
         });
     };
-    console.log(data)
+   
     return (
         <section id='moreInfoSection'>
             <section id='moreInfoWrapper'>
