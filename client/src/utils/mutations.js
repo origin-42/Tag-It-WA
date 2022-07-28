@@ -62,23 +62,23 @@ export const ADD_TAG = gql`
 `;
 
 export const UPDATE_TAG = gql`
-  mutation updateDate(
+  mutation updateTag(
     $_id: ID!
     $active: Boolean
     $resolved: Boolean
     $confirmed: Int
     $denied: Int 
   ) {
-    updateDate(
+    updateTag(
       _id: $_id
       active: $active
       resolved: $resolved
       confirmed: $confirmed
       denied: $denied
     ) {
-      Tag {
-        active
-      }
+      active
+      confirmed
+      denied
     }
   }
 `;

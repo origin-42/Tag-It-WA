@@ -75,5 +75,12 @@ export const DashboardMods = {
             flexDirection: "column",
             gap: "8px"
         }
+    },
+    spanHeader: {
+        fontSize: "1.1rem",
+        fontWeight: "bold"
+    },
+    articleUnderline: {
+        borderBottom: "1px solid black"
     }
 }

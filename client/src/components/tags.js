@@ -41,8 +41,8 @@ export const Tags = ({tagInfo, checkItems, checkedItems}) => {
     return (checkedItems.tagChecked === tagInfo._id ? (
         <article id={tagInfo._id} onClick={() => updateTagUsed(tagInfo._id)} style={DashboardMods.Tags.Container}>
             <div style={DashboardMods.Tags.Container}>
-                <p>Criteria: {subString}</p>
-                <p>Created: {newDate}</p>
+                <p><span style={DashboardMods.spanHeader}>Criteria:</span> {subString}</p>
+                <p><span style={DashboardMods.spanHeader}>Created:</span> {newDate}</p>
             </div>  
             <div>
                 {isResolved && <p data-resolved="true">Resolved: Yes</p>}
@@ -52,13 +52,13 @@ export const Tags = ({tagInfo, checkItems, checkedItems}) => {
                     </div>
                 )}
             </div>
-            <p>Description: {tagInfo.description}</p>
-            <p>Number of Comments: {tagInfo.comments.length}</p>
+            <p><span style={DashboardMods.spanHeader}>Description:</span> {tagInfo.description}</p>
+            <p><span style={DashboardMods.spanHeader}>Number of Comments:</span> {tagInfo.comments.length}</p>
 
             <div>
                 <div style={DashboardMods.Tags.Container}>
-                    <p id="confirmed">Confirmed: {tagInfo.confirmed}</p>
-                    <p id="denied">Denied: {tagInfo.denied}</p>
+                    <p id="confirmed"><span style={DashboardMods.spanHeader}>Confirmed:</span> {tagInfo.confirmed}</p>
+                    <p id="denied"><span style={DashboardMods.spanHeader}>Denied:</span> {tagInfo.denied}</p>
                 </div>
                 <div style={DashboardMods.Tags.Container}>
                     <button style={Button.smallBlue}><Link to="/moreInfo">More Information</Link></button>

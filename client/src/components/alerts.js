@@ -32,17 +32,21 @@ export const Alerts = ({alertInfo, checkItems, checkedItems}) => {
     return (checkedItems.alertChecked ? (
         <article id={alertInfo._id} onClick={updateAlertUsed}>
             <div style={DashboardMods.Alerts.Container}>
-                <p>Criteria: {subString}</p>
-                <p>Date: {GetDate(alertInfo.date)}</p>
-                <p>Description: {alertInfo.description}</p>
+                <p><span style={DashboardMods.spanHeader}>Criteria:</span> {subString}</p>
+                <p><span style={DashboardMods.spanHeader}>Date:</span> {GetDate(alertInfo.date)}</p>
+                
             </div>
 
-            <p>Number of Comments: {alertInfo.comments.length}</p>
+            <div style={DashboardMods.Alerts.Container}>
+                <p><span style={DashboardMods.spanHeader}>Description:</span> {alertInfo.description}</p>
+                <p><span style={DashboardMods.spanHeader}>Number of Comments:</span> {alertInfo.comments.length}</p>
+            </div>
+            
 
             <div>
                 <div style={DashboardMods.Alerts.Container}>
-                    <p id="confirmed">Confirmed: {alertInfo.confirmed}</p>
-                    <p id="denied">Denied: {alertInfo.denied}</p>
+                    <p id="confirmed"><span style={DashboardMods.spanHeader}>Confirmed:</span> {alertInfo.confirmed}</p>
+                    <p id="denied"><span style={DashboardMods.spanHeader}>Denied:</span> {alertInfo.denied}</p>
                 </div>
                 <button style={Button.smallBlue}><Link to="/altUserTag">More Information</Link></button>
             </div>

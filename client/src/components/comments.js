@@ -32,17 +32,20 @@ export const Comments = ({ commentInfo, checkItems, checkedItems }) => {
     const subString = data.tag.criteria[0].toUpperCase() + data.tag.criteria.substring(1);
 
     return (checkedItems.commentChecked === commentInfo._id ? (
-        <article id={commentInfo._id} onClick={() => updateCommentUsed(commentInfo._id, data.tag._id)}>
+        <article id={commentInfo._id} onClick={() => updateCommentUsed(commentInfo._id, data.tag._id)} style={DashboardMods.Tags.Container}>
             <div style={DashboardMods.Comments.Container}>
-                <p>Criteria: {subString}</p>
-                <p>Created: {GetDate(commentInfo.date)}</p>
+                <p><span style={DashboardMods.spanHeader}>Criteria:</span> {subString}</p>
+                <p><span style={DashboardMods.spanHeader}>Created:</span> {GetDate(commentInfo.date)}</p>
             </div>  
-            <p>Description: {commentInfo.description}</p>
-            <p>Number of Comments: {data.tag.comments.length}</p>
+            <div style={DashboardMods.Comments.Container}>
+                <p><span style={DashboardMods.spanHeader}>Description:</span> {commentInfo.description}</p>
+                <p><span style={DashboardMods.spanHeader}>Number of Comments:</span> {data.tag.comments.length}</p>
+            </div>
+            
             <div style={DashboardMods.Comments.Container}>
                 <div style={DashboardMods.Comments.Container}>
-                    <p id="confirmed">Confirmed: {data.tag.confirmed}</p>
-                    <p id="denied">Denied: {data.tag.denied}</p>
+                    <p id="confirmed"><span style={DashboardMods.spanHeader}>Confirmed:</span> {data.tag.confirmed}</p>
+                    <p id="denied"><span style={DashboardMods.spanHeader}>Denied:</span> {data.tag.denied}</p>
                 </div>
                 <button style={Button.smallBlue}><Link to="/commentInfo">More Information</Link></button>
             </div>

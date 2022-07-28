@@ -8,7 +8,6 @@ import { Link } from 'react-router-dom';
 import { Alerts } from '../components/alerts';
 import { DashboardCSS, DashboardMods } from '../css/dashboard';
 import { Button } from '../css/button';
-import { UniversalCSS } from '../css/universalCssJs';
 
 export const Dashboard = () => {
 

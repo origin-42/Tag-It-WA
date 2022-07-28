@@ -140,9 +140,9 @@ const resolvers = {
         // Update existing tag
         updateTag: async (parent, args, context) => {
             if (context.user) {
-
-                return Tags.findByIdAndUpdate(args._id, args, { new: true });
-
+                const updateTag = await Tags.findByIdAndUpdate(args._id, args, { new: true });
+                console.log(updateTag)
+                return updateTag
             }
         },
 
