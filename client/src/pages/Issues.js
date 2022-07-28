@@ -44,7 +44,8 @@ export const Issues = () => {
         }
 
         console.log(details)
-        window.location.replace("/dashboard");
+        window.location.assign("/dashboard");
+        
     }
 
     const handleNotifications = (e) => {
