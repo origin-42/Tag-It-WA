@@ -4,7 +4,7 @@ import { useLazyQuery, useQuery } from '@apollo/client';
 import { criteriaData } from '../utils/criteriaData';
 import { useState } from 'react';
 
-export const ManageAlerts = () => {
+export const ManageAlerts = ({ setCriteriaState }) => {
     if (!Auth.loggedIn()) {
         alert("Please login")
         window.location.replace("/");
@@ -31,17 +31,19 @@ export const ManageAlerts = () => {
        
         const newCriData = await getCriteria({
             variables: { criteria: newCriteria }
-        })
+        });
 
         changeCriteria({
             ...alertSettings,
             criteria: e.target.value,
             criteriaData: newCriData.data.getCriteria
-        })
+        });
+
+        
     }
-   
+  
     const setCriteria = () => {
-        alertSettings.criteriaData && localStorage.setItem("userCriteria", JSON.stringify(alertSettings.criteriaData))
+        localStorage.setItem("userCriteria", JSON.stringify(alertSettings.criteriaData));
         window.location.replace("/dashboard")
     }
 

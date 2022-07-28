@@ -1,7 +1,8 @@
 import Auth from '../utils/auth';
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { QUERY_USER } from '../utils/queries';
-import { useQuery } from '@apollo/client';
+import { DELETE_USER } from '../utils/mutations';
+import { useQuery, useMutation } from '@apollo/client';
 import { Tags } from '../components/tags';
 import { Comments } from '../components/comments';
 import { Link } from 'react-router-dom';
@@ -22,6 +23,16 @@ export const Dashboard = () => {
         alertChecked: false
     })
 
+    const userCriteria = useRef(() => {
+        let userData = ""
+        if (localStorage.getItem("userCriteria")) {
+            userData = JSON.parse(localStorage.getItem("userCriteria"))
+        }
+        return userData;
+    })
+
+    const [ removeUser, { error: removeUserError } ] = useMutation(DELETE_USER);
+
     const { loading, error, data } = useQuery(QUERY_USER);
     if (error) {
         console.log(error)
@@ -31,17 +42,19 @@ export const Dashboard = () => {
         return <div>Loading data</div>
     }
 
-    const removeAccount = () => {
+    const removeAccount = async () => {
         const confirmDelete = window.confirm("Are you sure you want to delete your account?");
 
         if (confirmDelete) {
-            // Await deleteAccount etc etc
-            // If successful replace screen
-            // Window.location.replace('/')
+            removeUserError && console.log(removeUserError)
+            await removeUser({
+                variables: { username: data.user.username }
+            })
+            if (!removeUserError) {
+                Auth.logout();
+            }
         }
     }
-
-    let userCriteria = JSON.parse(localStorage.getItem("userCriteria"))
 
     return (
         <section id='dashboard'  style={DashboardCSS.dashboard}>
@@ -80,14 +93,14 @@ export const Dashboard = () => {
                     <article id='yourAlerts' style={DashboardCSS.optionsBox}>
                         <h3 style={DashboardCSS.centerHeader}>ALERTS</h3>
                         {/* Add each alert */}
-                        {userCriteria[0].description && userCriteria.map((alert) => {
+                        {userCriteria.current() && userCriteria.current().map((alert) => {
                             return (
                                 <article key={alert._id} style={DashboardMods.All}>
                                     <Alerts alertInfo={alert} checkItems={checkItem} checkedItems={checkedItems} />
                                 </article>
                             )
                         })}
-                        {!userCriteria[0].description && <h4>No Alerts yet</h4>}
+                        {!userCriteria.current() && <h4>No Alerts set</h4>}
                     </article>
                 </article>
 

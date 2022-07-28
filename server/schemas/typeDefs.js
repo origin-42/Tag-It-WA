@@ -62,7 +62,7 @@ const typeDefs = gql`
             email: String  
         ): User
 
-        removeUser( _id: ID! ): User
+        removeUser( username: String! ): User
 
         login( 
             username: String! 

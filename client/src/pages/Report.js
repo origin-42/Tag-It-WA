@@ -14,6 +14,7 @@ const mapConfig = {
 }
 
 export const Report = () => {
+
     const { isLoaded } = useJsApiLoader({
         googleMapsApiKey: APIKEY
     });

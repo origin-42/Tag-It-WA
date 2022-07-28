@@ -38,7 +38,7 @@ const resolvers = {
             try {
 
                 const tag = await Tags.findById(_id);
-                console.log(tag)
+          
                 return tag
 
             } catch (err) {
@@ -48,9 +48,11 @@ const resolvers = {
         },
 
         getCriteria: async (parent, { criteria }) => {
+
+            const subString = criteria[0].toUpperCase() + criteria.substring(1);
+
+            const tags = await Tags.find({ criteria: subString })
  
-            const tags = await Tags.find({ criteria })
-     
             return tags
         },
 
@@ -90,7 +92,7 @@ const resolvers = {
         removeUser: async (parent, args, context) => {
             if (context.user) {
 
-                return Users.findByIdAndDelete(context.user.id)
+                return Users.findByIdAndDelete(context.user._id)
 
             }
         },
@@ -116,12 +118,15 @@ const resolvers = {
         addTag: async (parent, args, context) => {
         
             if (context.user) {
+                const user = await Users.findById(context.user._id)
+                args.user = user._id
+          
                 const tag = await Tags.create(args);
 
                 await Users.findByIdAndUpdate(context.user._id, {
                     $push: { tags: tag },
                 });
-    
+            
                 return tag;
             }
             

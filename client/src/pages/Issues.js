@@ -6,6 +6,7 @@ import { ADD_TAG } from '../utils/mutations';
 import { useMutation } from '@apollo/client';
 
 export const Issues = () => {
+
     // Get the coordinates once user accepts.
     const coords = useMemo(() => JSON.parse(localStorage.getItem("coords")), []);
     const [details, changeDetails] = useState({

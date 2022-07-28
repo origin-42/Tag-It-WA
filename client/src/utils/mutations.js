@@ -109,3 +109,11 @@ export const ADD_COMMENT = gql`
     }
   }
 `;
+
+export const DELETE_USER = gql`
+  mutation removeUser($username: String!) {
+    removeUser(username: $username) {
+      username
+    }
+  }
+`
