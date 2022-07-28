@@ -13,7 +13,7 @@ export const MoreInfo = () => {
     const { loading, error, data } = useQuery(QUERY_TAG, {
         variables: { _id: newQuery }
     });
-    
+  
     const [newComment, createComment] = useState({
         description: "",
         user: "", 
@@ -25,7 +25,7 @@ export const MoreInfo = () => {
 
     const handleComment = async (e) => {
         e.preventDefault()
-        console.log(newComment)
+      
         await addComment({
             variables: { 
                 _id: newComment.tag,
@@ -68,7 +68,7 @@ export const MoreInfo = () => {
           [name]: value,
         });
     };
-    
+    console.log(data)
     return (
         <section id='moreInfoSection'>
             <section id='moreInfoWrapper'>

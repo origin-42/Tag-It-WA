@@ -38,7 +38,7 @@ const resolvers = {
             try {
 
                 const tag = await Tags.findById(_id);
-          
+       
                 return tag
 
             } catch (err) {
@@ -162,15 +162,17 @@ const resolvers = {
                     repliedUser: args.repliedUser || null,
                     date: Date.now()
                 }
-                await Comments.create(newComment);
+               
+                const createdComment = await Comments.create(newComment);
+              
                 await Tags.findByIdAndUpdate(args._id, {
-                    $push: { comments: newComment }
+                    $push: { comments: createdComment }
                 });
                 await Users.findByIdAndUpdate(context.user._id, {
-                    $push: { comments: newComment }
+                    $push: { comments: createdComment }
                 });
-                const updatedTag = Tags.findById(args._id);
-
+                const updatedTag = await Tags.findById(args._id);
+             
                 return updatedTag
             }
 

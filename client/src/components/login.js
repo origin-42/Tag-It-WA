@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { LOGIN } from '../utils/mutations';
 import Auth from '../utils/auth';
+import { ModalCSS } from '../css/modal';
+import { Button } from '../css/button';
 
 export const Login = () => {
     const [formState, setFormState] = useState({ username: '', password: '' });
@@ -35,26 +37,28 @@ export const Login = () => {
         <section className="site-access">
             <section id="login-section">
 
-                <form onSubmit={handleFormSubmit}>
+                <form onSubmit={handleFormSubmit} style={ModalCSS.modalSections}>
                     <div>
-                        <label htmlFor="username">Username:</label>
+                        <label htmlFor="username" style={ModalCSS.modalSpan}>Username:</label>
                         <input
                             placeholder="mikeymike89"
                             name="username"
                             type="username"
                             id="username"
                             onChange={handleChange}
+                            style={ModalCSS.modalInput}
                         />
                     </div>
 
                     <div>
-                        <label htmlFor="password">Password:</label>
+                        <label htmlFor="password" style={ModalCSS.modalSpan}>Password:</label>
                         <input
                             placeholder="******"
                             name="password"
                             type="password"
                             id="password"
                             onChange={handleChange}
+                            style={ModalCSS.modalInput}
                         />
                     </div>
 
@@ -64,7 +68,7 @@ export const Login = () => {
                         </div>}
                     
                     <div>
-                        <button type="submit">Login</button>
+                        <button type="submit" style={Button.smallBlue}>Login</button>
                     </div>
                 </form>
             </section>

@@ -80,14 +80,14 @@ export const Dashboard = () => {
                     <article id='yourComments' style={DashboardCSS.optionsBox}>
                         <h3 style={DashboardCSS.centerHeader}>COMMENTS</h3>
                         {/* Add each comment to this tag */}
-                        {data.user.comments && data.user.comments.map((comment) => {
+                        {data.user.comments.length > 0 && data.user.comments.map((comment) => {
                             return (
                                 <article key={comment._id} style={DashboardMods.All}>
                                     <Comments commentInfo={comment} checkItems={checkItem} checkedItems={checkedItems} />
                                 </article>
                             )
                         })}
-                        {!data.user.comments && <h4>No comments made</h4>}
+                        {!data.user.comments.length > 0 && <h4>No comments made</h4>}
                     </article>
 
                     <article id='yourAlerts' style={DashboardCSS.optionsBox}>

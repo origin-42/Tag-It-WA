@@ -22,7 +22,7 @@ export const CommentInfo = () => {
     });
 
     const [ addComment, { error: addCommentError } ] = useMutation(ADD_COMMENT);
-    const [ updateComment, { error: updateTagError } ] = useMutation(UPDATE_TAG);
+    // const [ updateComment, { error: updateTagError } ] = useMutation(UPDATE_TAG);
 
     const handleComment = async (e) => {
         e.preventDefault()
@@ -67,21 +67,21 @@ export const CommentInfo = () => {
         });
     };
 
-    const confirmTag = async (confirmed) => {
-        let confirmedInt = data.tag.confirmed;
-        let deniedInt = data.tag.denied;
-        confirmed?
-            confirmedInt = confirmedInt++ :
-            deniedInt = deniedInt++ ;
+    // const confirmTag = async (confirmed) => {
+    //     let confirmedInt = data.tag.confirmed;
+    //     let deniedInt = data.tag.denied;
+    //     confirmed?
+    //         confirmedInt = confirmedInt++ :
+    //         deniedInt = deniedInt++ ;
 
-        await updateComment({
-            variables: { _id: data.tag._id, confirmed: confirmedInt, denied: deniedInt }
-        })
+    //     await updateComment({
+    //         variables: { _id: data.tag._id, confirmed: confirmedInt, denied: deniedInt }
+    //     })
 
-        if (updateTagError) {
-            console.log(updateTagError)
-        }
-    }
+    //     if (updateTagError) {
+    //         console.log(updateTagError)
+    //     }
+    // }
     
     const { criteria, date, confirmed, denied, description, comments } = data.tag;
     const subString = criteria[0].toUpperCase() + criteria.substring(1);
@@ -128,8 +128,8 @@ export const CommentInfo = () => {
                 )}
                 <section>
                     <div>
-                        <button title='This tag is legitimate' id='confirmTag' onClick={() => confirmTag(true)}>Confirm</button>
-                        <button title='This is a fabrication' id='denyTag' onClick={() => confirmTag(false)}>Deny</button>
+                        <button title='This tag is legitimate' id='confirmTag'>Confirm</button>
+                        <button title='This is a fabrication' id='denyTag'>Deny</button>
                     </div>
                 </section>
             </section>
