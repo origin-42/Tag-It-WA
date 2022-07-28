@@ -18,8 +18,21 @@ export const QUERY_USER = gql`
                 denied
                 comments {
                     _id
-                    description
                 }
+            }
+            comments {
+                _id
+                description
+                user {
+                    _id
+                }
+                tag {
+                    _id
+                }
+                repliedUser {
+                    _id
+                }
+                date
             }
         }
     }

@@ -14,3 +14,7 @@ a, li {
     font-style: inherit;
     text-decoration: inherit;
 }
+
+span {
+    font-weight: bold;
+}
