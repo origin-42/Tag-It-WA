@@ -45,6 +45,11 @@ const client = new ApolloClient({
             merge(existing, incoming, { mergeObjects }) {
               return mergeObjects(existing, incoming);
             },
+          },
+          Comments: {
+            merge(existing, incoming, { mergeObjects }) {
+              return mergeObjects(existing, incoming);
+            },
           }
         }
       }

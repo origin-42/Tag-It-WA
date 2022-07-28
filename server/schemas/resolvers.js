@@ -30,15 +30,16 @@ const resolvers = {
         },
 
         // Get all tags
-        tags: async () => Tags.find(),
+        tags: async () => Tags.find().populate('user').populate('comments'),
 
         // Find a tag
         tag: async (parent, { _id }) => {
 
             try {
 
-                const tag = await Tags.findById(_id);
-       
+                const tag = await Tags.findById(_id).populate('comments').populate('user');
+
+console.log(tag)
                 return tag
 
             } catch (err) {
@@ -51,17 +52,17 @@ const resolvers = {
 
             const subString = criteria[0].toUpperCase() + criteria.substring(1);
 
-            const tags = await Tags.find({ criteria: subString })
+            const tags = await Tags.find({ criteria: subString }).populate('comments').populate('user')
  
             return tags
         },
 
         // Get all comments
-        comments: async () => Comments.find(),
+        comments: async () => Comments.find().populate('comment').populate('user'),
 
         // Get a comment
         comment: async (parent, { _id }) => {
-            const comment = await Comments.findById(_id);
+            const comment = await Comments.findById(_id).populate('comment').populate('user');
 
             return comment
         }
@@ -98,7 +99,7 @@ const resolvers = {
         },
 
         login: async (parent, { username, password }) => {
-            const user = await Users.findOne({ username });
+            const user = await Users.findOne({ username }).populate('tags').populate('comments');
     
             if (!user) {
               throw new AuthenticationError('Incorrect credentials');
@@ -171,7 +172,7 @@ const resolvers = {
                 await Users.findByIdAndUpdate(context.user._id, {
                     $push: { comments: createdComment }
                 });
-                const updatedTag = await Tags.findById(args._id);
+                const updatedTag = await Tags.findById(args._id).populate('comments').populate('user');
              
                 return updatedTag
             }

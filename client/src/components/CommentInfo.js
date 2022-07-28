@@ -58,7 +58,7 @@ export const CommentInfo = () => {
     } else if (loading) {
         return <div>Loading data</div>
     }
-
+console.log(data.tag)
     const changeComment = (event) => {
         const { name, value } = event.target;
         createComment({
@@ -91,7 +91,7 @@ export const CommentInfo = () => {
     
     const { criteria, date, confirmed, denied, description, comments } = data.tag;
     const subString = criteria[0].toUpperCase() + criteria.substring(1);
-  
+ 
     return (
         <section id='moreInfoSection'>
             <section id='moreInfoWrapper'>

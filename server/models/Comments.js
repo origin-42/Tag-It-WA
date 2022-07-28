@@ -7,17 +7,17 @@ const commentsSchema = new Schema({
   },
   user: {
     type: Schema.Types.ObjectId,
-    ref: 'users',
+    ref: 'Users',
     required: true,
   },
   tag: {
     type: Schema.Types.ObjectId,
-    ref: 'tags',
+    ref: 'Tags',
     required: true,
   },
   repliedUser: {
     type: Schema.Types.ObjectId,
-    ref: 'users',
+    ref: 'Users',
   },
   date: {
     type: Date,
