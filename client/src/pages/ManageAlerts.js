@@ -7,7 +7,7 @@ import { useState } from 'react';
 export const ManageAlerts = ({ setCriteriaState }) => {
     if (!Auth.loggedIn()) {
         alert("Please login")
-        window.location.replace("/");
+        window.location.assign("/");
     }
 
     const [getCriteria] = useLazyQuery(QUERY_CRITERIA);
@@ -44,7 +44,7 @@ export const ManageAlerts = ({ setCriteriaState }) => {
   
     const setCriteria = () => {
         localStorage.setItem("userCriteria", JSON.stringify(alertSettings.criteriaData));
-        window.location.replace("/dashboard")
+        window.location.assign("/dashboard");
     }
 
     return (

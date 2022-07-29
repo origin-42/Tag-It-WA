@@ -14,7 +14,7 @@ export const Dashboard = () => {
 
     if (!Auth.loggedIn()) {
         alert("Please login")
-        window.location.replace("/");
+        window.location.assign("/");
     }
 
     const [ checkedItems, checkItem ] = useState({
