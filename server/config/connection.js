@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/googlebooks-app', {
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/tagit-wa', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
