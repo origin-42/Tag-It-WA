@@ -19,7 +19,7 @@ export const Header = () => {
             <section id="navbar">
                 <section id="nav-container" style={HeaderCSS.navContainer}>
                     
-                    <img id='logo' src={Logo} alt='Logo'></img>
+                    <img id='logo' src={Logo} alt='Logo' style={HeaderCSS.img}></img>
 
                     {/* Header for users login status */}
                     <article id="links" style={{...HeaderCSS.flexJustEnd}}>

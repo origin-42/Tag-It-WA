@@ -3,6 +3,13 @@ import { ADD_COMMENT } from '../utils/mutations';
 import { useQuery, useMutation } from '@apollo/client';
 import { GetDate } from '../utils/helper';
 import { useState } from "react";
+import { Link } from 'react-router-dom';
+
+import { TagSectionsCSS } from '../css/tagsSections';
+import { Button } from '../css/button';
+
+import { FaRegArrowAltCircleLeft, FaMapPin, FaExclamation } from 'react-icons/fa';
+import { BsPersonCircle } from 'react-icons/bs';
 
 export const MoreInfo = () => {
 
@@ -56,7 +63,7 @@ export const MoreInfo = () => {
         return <div>Loading data</div>
     }
 
-    const { criteria, date, description, confirmed, denied, comments } = data.tag;
+    const { lat, lng, criteria, date, description, confirmed, denied, comments } = data.tag;
     const subString = criteria[0].toUpperCase() + criteria.substring(1);
 
     const changeComment = (event) => {
@@ -70,45 +77,86 @@ export const MoreInfo = () => {
     };
    
     return (
-        <section id='moreInfoSection'>
-            <section id='moreInfoWrapper'>
-
-                <article id='moreInfoHead'>
-                    <div>
-                        <h2>{subString}</h2>
-                        <h2> at: {GetDate(date)}</h2>
-                        <h2>{description}</h2>
+        <section id='moreInfoSection' style={TagSectionsCSS.tags.moreInfoSection}>
+            <section id='moreInfoWrapper' style={TagSectionsCSS.tags.moreInfoWrapper}>
+                <article id='moreInfoHead' style={TagSectionsCSS.tags.secLeft}>
+                    <div style={TagSectionsCSS.tags.titles}>
+                        <h2>TAG DETAILS</h2>
                     </div>
                     <div>
-                        <div>
-                            <h3>Confirmed: {confirmed}</h3>
-                            <h3>Denied: {denied}</h3>
-                            <h3>Number of Comments: {comments.length}</h3>
+                        <div style={TagSectionsCSS.tags.confirmations}>
+                            <p style={TagSectionsCSS.tags.bold}>Criteria:</p>
+                            <p>{subString}</p>
+                        </div>
+                        <div style={TagSectionsCSS.tags.confirmations}>
+                            <p style={TagSectionsCSS.tags.bold}>Posted:</p>
+                            <p style={TagSectionsCSS.tags.dates}>{GetDate(date)}</p>
                         </div>
                     </div>
+                    <div>
+                        <p><FaExclamation /> {description}</p>
+                    </div>
+                    <div>
+                        <div style={TagSectionsCSS.tags.confirmations}>
+                            <p style={TagSectionsCSS.tags.valid}>Confirmed:</p>
+                            <p><span style={TagSectionsCSS.tags.invalid}>{confirmed}</span> times</p>
+                        </div>
+                        <div style={TagSectionsCSS.tags.confirmations}>
+                            <p style={TagSectionsCSS.tags.bold}>Denied:</p>
+                            <p><span style={TagSectionsCSS.tags.dates}>{denied}</span> times</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div style={TagSectionsCSS.tags.confirmations}>
+                            <p style={TagSectionsCSS.tags.bold}>Geo Coordinates:</p>
+                            <p><a href={`https://maps.google.com/?q=${lat},${lng}`}><FaMapPin /> Find address</a></p>
+                        </div>
+                        <div style={TagSectionsCSS.tags.confirmations}>
+                            <p style={TagSectionsCSS.tags.bold}>Latitude:</p>
+                            <p style={TagSectionsCSS.tags.dates}>{lat}</p>
+                        </div>
+                        <div style={TagSectionsCSS.tags.confirmations}>
+                            <p style={TagSectionsCSS.tags.bold}>Longitude:</p>
+                            <p style={TagSectionsCSS.tags.dates}>{lng}</p>
+                        </div>
+                    </div>
+                    <div>
+                        <Link to="/dashboard" title="Back to dashboard"><FaRegArrowAltCircleLeft style={TagSectionsCSS.tags.previous} /></Link>
+                    </div>
                 </article>
-                <section id='moreInfoComments'>
-                        {comments.map((comment) => {
-                            return (
-                                <article key={comment._id} className="altTagComment">
-                                    <p>{comment.user.username || "anonymouse"} wrote: {comment.description}</p>
-                                    <p>Dated: {GetDate(comment.date)}</p>
-                                </article>
-                            )
-                        })}
+                <section id='moreInfoComments' style={TagSectionsCSS.tags.secRight}>
+                    <div style={TagSectionsCSS.tags.titles}>
+                        <h2>COMMENTS</h2>
+                    </div>
+                    <section style={TagSectionsCSS.tags.comments}>
+                            {comments.map((comment) => {
+                                return (
+                                    <article key={comment._id} className="altTagComment">
+                                        <div style={TagSectionsCSS.tags.confirmations}>
+                                            <p style={TagSectionsCSS.tags.bold}><BsPersonCircle /> {comment.user.username || "Anonymouse"}</p>
+                                            <p style={TagSectionsCSS.tags.dates}>{GetDate(comment.date)}</p>
+                                        </div>
+                                        <div>
+                                            <p>{comment.description}</p>
+                                        </div>
+                                    </article>
+                                )
+                            })}
+                    </section>
+
+                    {!commentSection ? (
+                        <section>
+                            <button onClick={() => showCommentSec(true)} style={Button.blue}>Make Comment</button>
+                        </section>
+                    ) : (
+                        <section>
+                            <form style={TagSectionsCSS.tags.comments}>
+                                <input placeholder='Write your comment..' type="text" name='description' onChange={changeComment} style={TagSectionsCSS.tags.input}></input>
+                                <button onClick={handleComment} style={Button.blue}>Submit Comment</button>
+                            </form>
+                        </section>
+                    )}
                 </section>
-                {!commentSection ? (
-                    <section id='moreInfoComment'>
-                        <button onClick={() => showCommentSec(true)}>Make Comment</button>
-                    </section>
-                ) : (
-                    <section>
-                        <form>
-                            <input placeholder='Write your comment..' type="text" name='description' onChange={changeComment}></input>
-                            <button onClick={handleComment}>Send Comment</button>
-                        </form>
-                    </section>
-                )}
             </section>
         </section>
     )

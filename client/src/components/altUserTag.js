@@ -1,29 +1,42 @@
+import { QUERY_TAG } from '../utils/queries';
+import { ADD_COMMENT, UPDATE_TAG } from '../utils/mutations';
+import { useQuery, useMutation } from '@apollo/client';
+import { GetDate } from '../utils/helper';
 import { useState } from "react";
-import { useMutation } from '@apollo/client';
-import { ADD_COMMENT } from '../utils/mutations';
+import { Link } from 'react-router-dom';
+
+import { TagSectionsCSS } from '../css/tagsSections';
+import { Button } from '../css/button';
+
+import { FaRegArrowAltCircleLeft, FaMapPin, FaExclamation } from 'react-icons/fa';
+import { BsPersonCircle } from 'react-icons/bs';
 
 export const AltUserTag = () => {
-    const tagInfo = JSON.parse(localStorage.getItem('altUserTag'));
 
-    const [comments, addComments] = useState(tagInfo.comments)
+    const newQuery = localStorage.getItem('altUserTag');
 
-    const [commentSection, showCommentSec] = useState({
-        show: false
-    })
+    const [commentSection, showCommentSec] = useState(false);
 
+    const { loading, error, data } = useQuery(QUERY_TAG, {
+        variables: { _id: newQuery }
+    });
+    
     const [newComment, createComment] = useState({
         description: "",
-        user: tagInfo.user._id, 
-        tag: tagInfo._id, 
+        user: "", 
+        tag: "", 
         repliedUser: ""
-    })
+    });
 
     const [ addComment, { error: addCommentError } ] = useMutation(ADD_COMMENT);
+    const [ updateComment, { error: updateTagError } ] = useMutation(UPDATE_TAG);
+    const [confirmations, setConfirms] = useState(1)
+    console.log(confirmations)
 
-    const makeComment = async (e) => {
-        e.preventDefault();
-
-        const addNewComments = await addComment({
+    const handleComment = async (e) => {
+        e.preventDefault()
+       
+        await addComment({
             variables: { 
                 _id: newComment.tag,
                 description: newComment.description,
@@ -32,74 +45,154 @@ export const AltUserTag = () => {
             }
         });
 
-        addCommentError && alert("Error");
+        if (addCommentError) {
+            console.log(addCommentError)
+            alert("Error")
+            return 
+        } 
 
-        addComments(addNewComments.data.addComment.comments);
+        createComment({
+            ...newComment,
+            description: ""
+        });
+        showCommentSec(false);
     }
-
-    const makeReply = (e, id) => {
-        e.preventDefault();
-
-        showCommentSec({ show: true })
-        createComment({ ...newComment, repliedUser: id })
+    
+    if (error) {
+        console.log(error)
+        alert("Error")
+        return 
+    } else if (loading) {
+        return <div>Loading data</div>
     }
 
     const changeComment = (event) => {
         const { name, value } = event.target;
         createComment({
           ...newComment,
+          user: data.tag.user._id, 
+          tag: data.tag._id, 
           [name]: value,
         });
     };
 
-    const resetDescription = (e) => {
-        document.querySelector("#description").value = ""
+    const handleConfirms = async (conf, num) => {
+
+        if (conf) {
+            await updateComment({
+                variables: { _id: data.tag._id, confirmed: num + 1 }
+            })
+        } else {
+            await updateComment({
+                variables: { _id: data.tag._id, denied: num + 1 }
+            })
+        }
+
+        // Reload to get around instance
+        window.location.reload()
+
+        if (updateTagError) {
+            console.log(updateTagError)
+        }
     }
-
+    
+    const { lat, lng, criteria, date, confirmed, denied, description, comments } = data.tag;
+    const subString = criteria[0].toUpperCase() + criteria.substring(1);
+ 
     return (
-        <section id="altUserTag">
-            <section id="altUserTagSection">
-
-                <section id="alTagContainer">
-                    <div>
-                        <h2>{tagInfo.criteria}: <a href={`https://maps.google.com/?q=${tagInfo.lat},${tagInfo.lng}`} target="blank">google search</a>.</h2>
-                        <p aria-label='date-created'>{tagInfo.date}</p>
+        <section id='alertsSection' style={TagSectionsCSS.alerts.alertsSection}>
+            <section id='alertsWrapper' style={TagSectionsCSS.alerts.alertsWrapper}>
+                <article id='alertsHead' style={TagSectionsCSS.alerts.secLeft}>
+                    <div style={TagSectionsCSS.alerts.titles}>
+                        <h2>YOUR COMMENT DETAILS</h2>
                     </div>
-
                     <div>
-                        <h2>Description: {tagInfo.description}</h2>
-                        <h2>Confirmed: {tagInfo.confirmed}</h2>
-                        <h2>Denied: {tagInfo.denied}</h2>
-                        <h2>Number of Comment: {comments.length}</h2>
+                        <div style={TagSectionsCSS.alerts.confirmations}>
+                            <p style={TagSectionsCSS.alerts.bold}>Criteria:</p>
+                            <p>{subString}</p>
+                        </div>
+                        <div style={TagSectionsCSS.alerts.confirmations}>
+                            <p style={TagSectionsCSS.alerts.bold}>Posted:</p>
+                            <p style={TagSectionsCSS.alerts.dates}>{GetDate(date)}</p>
+                        </div>
                     </div>
-
                     <div>
+                        <p><FaExclamation /> {description}</p>
+                    </div>
+                    <div>
+                        <div style={TagSectionsCSS.alerts.confirmations}>
+                            <p style={TagSectionsCSS.alerts.valid}>Confirmed:</p>
+                            <p><span style={TagSectionsCSS.alerts.dates}>{confirmed}</span> times</p>
+                        </div>
+                        <div style={TagSectionsCSS.alerts.confirmations}>
+                            <p style={TagSectionsCSS.alerts.invalid}>Denied:</p>
+                            <p><span style={TagSectionsCSS.alerts.dates}>{denied}</span> times</p>
+                        </div>
+                        <div style={TagSectionsCSS.alerts.confirmations}>
+                            <p style={TagSectionsCSS.alerts.bold}>Number of Comments:</p>
+                            <p style={TagSectionsCSS.alerts.dates}>{comments.length} comments</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div style={TagSectionsCSS.alerts.confirmations}>
+                            <p style={TagSectionsCSS.alerts.bold}>Geo Coordinates:</p>
+                            <p><a href={`https://maps.google.com/?q=${lat},${lng}`}><FaMapPin /> Find address</a></p>
+                        </div>
+                        <div style={TagSectionsCSS.alerts.confirmations}>
+                            <p style={TagSectionsCSS.alerts.bold}>Latitude:</p>
+                            <p style={TagSectionsCSS.alerts.dates}>{lat}</p>
+                        </div>
+                        <div style={TagSectionsCSS.alerts.confirmations}>
+                            <p style={TagSectionsCSS.alerts.bold}>Longitude:</p>
+                            <p style={TagSectionsCSS.alerts.dates}>{lng}</p>
+                        </div>
+                    </div>
+                    <section>
+                        <div style={TagSectionsCSS.alerts.confirmations}>
+                            <p style={TagSectionsCSS.alerts.bold}>Is this comment valid?</p>
+                            <div style={TagSectionsCSS.alerts.gapper}>
+                                <button title='This tag is legitimate' id='confirmTag' style={Button.smallBlue} onClick={() => handleConfirms(true, confirmed)}>Accurate</button>
+                                <button title='This is a fabrication' id='denyTag' style={Button.smallRed} onClick={() => handleConfirms(false, denied)}>Innacurate</button>
+                            </div>
+                        </div>
+                    </section>
+                    <div>
+                        <Link to="/dashboard" title="Back to dashboard"><FaRegArrowAltCircleLeft style={TagSectionsCSS.alerts.previous} /></Link>
+                    </div>
+                </article>
+                <section style={TagSectionsCSS.alerts.secRight}>
+                    <div style={TagSectionsCSS.alerts.titles}>
                         <h2>COMMENTS</h2>
-                        {comments.map((comment) => {
-                            return (
-                                <article key={comment._id} className="altTagComment">
-                                    <p>{comment.user.username || "anonymouse"} wrote: {comment.description}</p>
-                                    <p>Dated: {comment.date}</p>
-                                    <button id="replyUser" onClick={(e) => makeReply(e, comment.user._id)}>Reply</button>
-                                </article>
-                            )
-                        })}
                     </div>
-
-                    {!commentSection.show ? (
-                            <section id="makeComment">
-                                <button id="makeComment" onClick={() => showCommentSec({ ...commentSection, show: true })}>Make a new comment</button>
-                            </section>
-                        ) : (
-                            <section id="makeComment">
-                                <form onSubmit={(e) => makeComment(e)}>
-                                    <input placeholder="Write comment..." type="text" id="description" name="description" onChange={changeComment}></input>
-                                    <button type="submit" id="createNewComment" onClick={resetDescription}>Make Comment</button>
-                                </form>
-                            </section>
-                        )}
+                    <section style={TagSectionsCSS.alerts.comments}>
+                            {comments.map((comment) => {
+                                return (
+                                    <article key={comment._id} className="altTagComment">
+                                        <div style={TagSectionsCSS.alerts.confirmations}>
+                                            <p style={TagSectionsCSS.alerts.bold}><BsPersonCircle /> {comment.user.username || "Anonymouse"}</p>
+                                            <p style={TagSectionsCSS.alerts.dates}>{GetDate(comment.date)}</p>
+                                        </div>
+                                        <div>
+                                            <p>{comment.description}</p>
+                                        </div>
+                                    </article>
+                                )
+                            })}
+                    </section>
+                
+                    {!commentSection ? (
+                        <section>
+                            <button onClick={() => showCommentSec(true)} style={Button.blue}>Make Comment</button>
+                        </section>
+                    ) : (
+                        <section>
+                            <form>
+                                <input placeholder='Write your comment..' type="text" name='description' onChange={changeComment} style={TagSectionsCSS.tags.input}></input>
+                                <button onClick={handleComment} style={Button.blue}>Submit Comment</button>
+                            </form>
+                        </section>
+                    )}
                 </section>
-
             </section>
         </section>
     )

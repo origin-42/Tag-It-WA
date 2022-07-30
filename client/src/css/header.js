@@ -17,6 +17,12 @@ export const HeaderCSS = {
     },
     navContainer: {
         display: "flex",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
+        alignItems: "center"
+    },
+    img: {
+        width: "150px",
+        height: "150px",
+        padding: "20px"
     }
 };

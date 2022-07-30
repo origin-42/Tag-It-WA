@@ -2,7 +2,10 @@ import Auth from '../utils/auth';
 import { QUERY_USER, QUERY_CRITERIA } from '../utils/queries';
 import { useLazyQuery, useQuery } from '@apollo/client';
 import { criteriaData } from '../utils/criteriaData';
+import { GetDate } from '../utils/helper';
 import { useState } from 'react';
+
+import { BsPersonCircle } from 'react-icons/bs';
 
 export const ManageAlerts = ({ setCriteriaState }) => {
     if (!Auth.loggedIn()) {
@@ -50,7 +53,6 @@ export const ManageAlerts = ({ setCriteriaState }) => {
     return (
         <section id='manageAlertsPage'>
             <section id='manageAlertsPageContainer'>
-
                 <article id='manageAlertsBox'>
                     <div id='selectAlertCriteria'>
                         <label htmlFor='alertsCriteria'>Select Criteria</label>
@@ -64,21 +66,50 @@ export const ManageAlerts = ({ setCriteriaState }) => {
                             })};
                         </select>
                     </div>
-                    <section id='alertDetails'>
-                            {alertSettings.criteriaData && (
-                                alertSettings.criteriaData.map((criteriaInfo) => {
-                                    return (
-                                        <article key={criteriaInfo._id} id={"CRI" + criteriaInfo._id}>
-                                            <h4>{criteriaInfo.description}; </h4>
-                                            <p>Confirmed: {criteriaInfo.confirmed}, </p>
-                                            <p>Denied: {criteriaInfo.denied}</p>
-                                        </article>
-                                    )
-                                })
-                            )}
-                    </section>
+                    <div>
+                        <p>Criteria: </p>
+                        <p>{alertSettings.criteria[0] && alertSettings.criteria[0].toUpperCase() + alertSettings.criteria.substring(1)}</p>
+                    </div>
+                    <div>
+                        <p>Number of issues: </p>
+                        <p>{alertSettings.criteriaData.length} issues</p>
+                    </div>
+                    <div>
+                        <button onClick={setCriteria}>Set Criteria</button>
+                    </div>
+                    
                 </article>
-                <button onClick={setCriteria}>Set Criteria</button>
+                <section id='alertDetails'>
+                    <div>
+                        <h2>Issues Related to Criteria</h2>
+                    </div>
+                    {alertSettings.criteriaData && (
+                        alertSettings.criteriaData.map((criteriaInfo) => {
+                            return (
+                                <article key={criteriaInfo._id} id={"CRI" + criteriaInfo._id}>
+                                    <div>
+                                        <p><BsPersonCircle /> {criteriaInfo.user ? criteriaInfo.user.username : "Anonymouse"}</p>
+                                        <p>{GetDate(criteriaInfo.date)}</p>
+                                    </div>
+                                    <div>
+                                        <h4>{criteriaInfo.description}; </h4>
+                                    </div>
+                                    <div>
+                                        <div>
+                                            <p title='This tag is legitimate'>Denied by users: </p>
+                                            <p>{criteriaInfo.confirmed}</p>
+                                        </div>
+                                        <div>
+                                            <p title='This is a fabrication'>Confirmed by users: </p>
+                                            <p>{criteriaInfo.denied}</p>
+                                        </div>
+                                    </div>
+                                </article>
+                            )
+                        })
+                    )}
+                </section>
+                
             </section>
         </section>
     )

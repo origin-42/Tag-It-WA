@@ -23,7 +23,7 @@ export const Alerts = ({alertInfo, checkItems, checkedItems}) => {
         const newTag = selectedTagData.data.tag
 
         // Destructure necessary info from this tag only into an object and set that.
-        localStorage.setItem("altUserTag", JSON.stringify(newTag));
+        localStorage.setItem("altUserTag", newTag._id);
     }
 
     // Utils
