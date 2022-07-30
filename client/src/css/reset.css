@@ -18,3 +18,7 @@ a, li {
 span {
     font-weight: bold;
 }
+
+main {
+    height: 100%;
+}
