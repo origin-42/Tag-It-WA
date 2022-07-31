@@ -30,7 +30,7 @@ const resolvers = {
         },
 
         // Get all tags
-        tags: async () => Tags.find().populate('user').populate('comments'),
+        tags: async () => Tags.find().populate('user').populate({ path: 'comments', populate: { path: "user", model: "Users" } }),
 
         // Find a tag
         tag: async (parent, { _id }) => {

@@ -83,7 +83,7 @@ export const MoreInfo = () => {
         return <div>Loading data</div>
     }
 
-    const { lat, lng, criteria, date, description, confirmed, denied, comments } = data.tag;
+    const { lat, lng, criteria, date, description, confirmed, denied, comments, user } = data.tag;
     const subString = criteria[0].toUpperCase() + criteria.substring(1);
 
     const changeComment = (event) => {
@@ -101,7 +101,7 @@ export const MoreInfo = () => {
             <section id='moreInfoWrapper' style={isMedium? TagSectionsCSS.tags.moreInfoWrapper: TagSectionsCSS.tags.moreInfoWrapperMd}>
                 <article id='moreInfoHead' style={TagSectionsCSS.tags.secLeft}>
                     <div style={TagSectionsCSS.tags.titles}>
-                        <h2>TAG DETAILS</h2>
+                        <h2>YOUR TAG DETAILS</h2>
                     </div>
                     <div>
                         <div style={TagSectionsCSS.tags.confirmations}>
@@ -111,6 +111,10 @@ export const MoreInfo = () => {
                         <div style={TagSectionsCSS.tags.confirmations}>
                             <p style={TagSectionsCSS.tags.bold}>Posted:</p>
                             <p style={TagSectionsCSS.tags.dates}>{GetDate(date)}</p>
+                        </div>
+                        <div style={TagSectionsCSS.comments.confirmations}>
+                            <p style={TagSectionsCSS.comments.bold}>Posted by:</p>
+                            <p>{user.username}</p>
                         </div>
                     </div>
                     <div>

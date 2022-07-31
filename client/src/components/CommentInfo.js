@@ -102,7 +102,7 @@ export const CommentInfo = () => {
         }
     }
     
-    const { lat, lng, criteria, date, confirmed, denied, description, comments } = data.tag;
+    const { lat, lng, criteria, date, confirmed, denied, description, comments, user } = data.tag;
     const subString = criteria[0].toUpperCase() + criteria.substring(1);
  
     return (
@@ -110,7 +110,7 @@ export const CommentInfo = () => {
             <section id='myCommentsWrapper' style={isMedium? TagSectionsCSS.comments.myCommentsWrapper: TagSectionsCSS.comments.myCommentsWrapperMd}>
                 <article id='myCommentsHead' style={TagSectionsCSS.comments.secLeft}>
                     <div style={TagSectionsCSS.comments.titles}>
-                        <h2>YOUR COMMENT DETAILS</h2>
+                        <h2>COMMENT DETAILS</h2>
                     </div>
                     <div>
                         <div style={TagSectionsCSS.comments.confirmations}>
@@ -120,6 +120,10 @@ export const CommentInfo = () => {
                         <div style={TagSectionsCSS.comments.confirmations}>
                             <p style={TagSectionsCSS.comments.bold}>Posted:</p>
                             <p style={TagSectionsCSS.comments.dates}>{GetDate(date)}</p>
+                        </div>
+                        <div style={TagSectionsCSS.comments.confirmations}>
+                            <p style={TagSectionsCSS.comments.bold}>Posted by:</p>
+                            <p>{user.username}</p>
                         </div>
                     </div>
                     <div>

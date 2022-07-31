@@ -102,7 +102,7 @@ export const AltUserTag = () => {
         }
     }
     
-    const { lat, lng, criteria, date, confirmed, denied, description, comments } = data.tag;
+    const { lat, lng, criteria, date, confirmed, denied, description, comments, user } = data.tag;
     const subString = criteria[0].toUpperCase() + criteria.substring(1);
  
     return (
@@ -110,7 +110,7 @@ export const AltUserTag = () => {
             <section id='alertsWrapper' style={isMedium? TagSectionsCSS.alerts.alertsWrapper: TagSectionsCSS.alerts.alertsWrapperMd}>
                 <article id='alertsHead' style={TagSectionsCSS.alerts.secLeft}>
                     <div style={TagSectionsCSS.alerts.titles}>
-                        <h2>YOUR COMMENT DETAILS</h2>
+                        <h2>COMMENT DETAILS</h2>
                     </div>
                     <div>
                         <div style={TagSectionsCSS.alerts.confirmations}>
@@ -120,6 +120,10 @@ export const AltUserTag = () => {
                         <div style={TagSectionsCSS.alerts.confirmations}>
                             <p style={TagSectionsCSS.alerts.bold}>Posted:</p>
                             <p style={TagSectionsCSS.alerts.dates}>{GetDate(date)}</p>
+                        </div>
+                        <div style={TagSectionsCSS.comments.confirmations}>
+                            <p style={TagSectionsCSS.comments.bold}>Posted by:</p>
+                            <p>{user.username}</p>
                         </div>
                     </div>
                     <div>
