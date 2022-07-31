@@ -12,7 +12,7 @@ const resolvers = {
            
             if (context.user) {
               const user = await Users.findById(context.user._id).populate('tags').populate('comments');
-   
+                
               return user;
             }
         },
@@ -37,8 +37,14 @@ const resolvers = {
 
             try {
 
-                const tag = await Tags.findById(_id).populate('comments').populate('user');
-                
+                const tag = await Tags.findById(_id).populate('user').populate({
+                    path: 'comments',
+                    populate: {
+                        path: 'user',
+                        model: 'Users'
+                    }
+                });
+               
                 return tag
 
             } catch (err) {
@@ -57,11 +63,11 @@ const resolvers = {
         },
 
         // Get all comments
-        comments: async () => Comments.find().populate('comment').populate('user'),
+        comments: async () => Comments.find().populate('user').populate('tag'),
 
         // Get a comment
         comment: async (parent, { _id }) => {
-            const comment = await Comments.findById(_id).populate('comment').populate('user');
+            const comment = await Comments.findById(_id).populate('tag').populate('user')
 
             return comment
         }
