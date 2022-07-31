@@ -1,5 +1,5 @@
 import { QUERY_TAG } from '../utils/queries';
-import { ADD_COMMENT } from '../utils/mutations';
+import { ADD_COMMENT, UPDATE_TAG } from '../utils/mutations';
 import { useQuery, useMutation } from '@apollo/client';
 import { GetDate } from '../utils/helper';
 import { useState } from "react";
@@ -16,7 +16,7 @@ import { BsPersonCircle } from 'react-icons/bs';
 
 export const MoreInfo = () => {
 
-    const newQuery = localStorage.getItem("currentTag");
+    let newQuery = localStorage.getItem("currentTag");
 
     const [commentSection, showCommentSec] = useState(false);
 
@@ -35,6 +35,20 @@ export const MoreInfo = () => {
     });
 
     const [ addComment, { error: addCommentError } ] = useMutation(ADD_COMMENT);
+    const [ sendUpdate, { error: updateTagError } ] = useMutation(UPDATE_TAG);
+
+    const updateTag = async () => {
+        await sendUpdate({
+            variables: {
+                _id: data.tag._id,
+                resolved: true
+            }
+        })
+        updateTagError && console.log(updateTagError);
+
+        alert("Tag Resolved.");
+        window.location.assign("/dashboard");
+    }
 
     const handleComment = async (e) => {
         e.preventDefault()
@@ -124,6 +138,14 @@ export const MoreInfo = () => {
                         <div style={TagSectionsCSS.tags.confirmations}>
                             <p style={TagSectionsCSS.tags.bold}>Longitude:</p>
                             <p style={TagSectionsCSS.tags.dates}>{lng}</p>
+                        </div>
+                    </div>
+                    <div style={TagSectionsCSS.tags.confirmations}>
+                        <div>
+                            <p><span>Resolved:</span> No</p>
+                        </div>
+                        <div>
+                            <button onClick={updateTag} style={Button.smallBlue}>Resolve Tag?</button>
                         </div>
                     </div>
                     <div>

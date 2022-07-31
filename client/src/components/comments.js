@@ -54,7 +54,7 @@ export const Comments = ({ commentInfo, checkItems, checkedItems }) => {
         <article id={commentInfo._id} onClick={() => checkCommentTag(commentInfo._id)}>
             <div>
                 <div style={DashboardMods.Comments.Container}>
-                    <h4>{subString}</h4>
+                    <h3>{subString}</h3>
                     <h4>{GetDate(commentInfo.date)}</h4>
                 </div>
             </div>

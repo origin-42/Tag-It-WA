@@ -68,7 +68,8 @@ export const Dashboard = () => {
                         <h3 style={DashboardCSS.centerHeader}>TAGS</h3>
                         {/* Add each tag */}
                         {data.user.tags[0] && data.user.tags.map((tag) => {
-                            return (
+                       
+                            return (!tag.resolved &&
                                 <article key={tag._id} style={DashboardMods.All}>
                                     <Tags tagInfo={tag} checkItems={checkItem} checkedItems={checkedItems} />
                                 </article>

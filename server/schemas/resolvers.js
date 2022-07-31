@@ -38,8 +38,7 @@ const resolvers = {
             try {
 
                 const tag = await Tags.findById(_id).populate('comments').populate('user');
-
-console.log(tag)
+                
                 return tag
 
             } catch (err) {
@@ -147,7 +146,7 @@ console.log(tag)
         updateTag: async (parent, args, context) => {
             if (context.user) {
                 const updateTag = await Tags.findByIdAndUpdate(args._id, args, { new: true });
-                console.log(updateTag)
+                
                 return updateTag
             }
         },

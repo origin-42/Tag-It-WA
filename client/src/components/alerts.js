@@ -29,7 +29,7 @@ export const Alerts = ({alertInfo, checkItems, checkedItems}) => {
     // Utils
     const subString = alertInfo.criteria[0].toUpperCase() + alertInfo.criteria.substring(1);
 
-    return (checkedItems.alertChecked ? (
+    return (checkedItems.alertChecked === alertInfo._id ? (
         <article id={alertInfo._id} onClick={updateAlertUsed}>
             <div style={DashboardMods.Alerts.Container}>
                 <p><span style={DashboardMods.spanHeader}>Criteria:</span> {subString}</p>
@@ -55,7 +55,7 @@ export const Alerts = ({alertInfo, checkItems, checkedItems}) => {
         <article id={alertInfo._id} onClick={() => checkNewAlert(alertInfo._id)}>
             <div style={DashboardMods.Alerts.Container}>
                 <h3>{subString}</h3>
-                <p>{GetDate(alertInfo.date)}</p>
+                <h4>{GetDate(alertInfo.date)}</h4>
             </div>
         </article>
     );

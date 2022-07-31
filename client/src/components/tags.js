@@ -1,29 +1,9 @@
-import { useState } from "react";
-import { useMutation } from "@apollo/client";
-import { UPDATE_TAG } from '../utils/mutations';
 import { Link } from 'react-router-dom';
 import { GetDate } from '../utils/helper';
 import { Button } from '../css/button';
 import { DashboardMods } from '../css/dashboard';
 
 export const Tags = ({tagInfo, checkItems, checkedItems}) => {
-
-    const [ isResolved, resolveTag ] = useState(tagInfo.resolved);
-    
-    // todo is checked
-
-    const [ resolveTagData, { error } ] = useMutation(UPDATE_TAG);
-
-    const resolve = async () => {
-    
-       await resolveTagData({ variables: { _id: tagInfo._id, resolved: true } })
-
-       if (error) {
-        alert("Update error")
-       }
-
-       resolveTag(true)
-    }
 
     const updateTagUsed = (id) => {
         checkItems({ ...checkedItems, tagChecked: false })
@@ -45,12 +25,9 @@ export const Tags = ({tagInfo, checkItems, checkedItems}) => {
                 <p><span style={DashboardMods.spanHeader}>Created:</span> {newDate}</p>
             </div>  
             <div>
-                {isResolved && <p data-resolved="true">Resolved: Yes</p>}
-                {!isResolved && (
                     <div id="notResolved" style={DashboardMods.Tags.Container}>
-                        <button onClick={resolve} style={Button.smallRed}>Resolved: No</button>
+                        <p><span style={DashboardMods.spanHeader}>Resolved:</span> No</p>
                     </div>
-                )}
             </div>
             <p><span style={DashboardMods.spanHeader}>Description:</span> {tagInfo.description}</p>
             <p><span style={DashboardMods.spanHeader}>Number of Comments:</span> {tagInfo.comments.length}</p>
@@ -70,7 +47,7 @@ export const Tags = ({tagInfo, checkItems, checkedItems}) => {
         <article id={tagInfo._id} onClick={() => checkNewTag(tagInfo._id)}>
             <div>
                 <h3>{subString}</h3>
-                <p>{newDate}</p>
+                <h4>{newDate}</h4>
             </div>
         </article>
     ))

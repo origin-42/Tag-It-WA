@@ -33,7 +33,7 @@ export const DashboardCSS = {
         borderRadius: "3px",
         color: "black",
         textShadow: "2px 7px 5px rgba(0,0,0,0.3), 0px -4px 10px rgba(255,255,255,0.3)",
-        minWidth: "300px"
+        minWidth: "300px",
     },
     centerHeader: {
         textAlign: "center",
@@ -53,13 +53,15 @@ export const DashboardMods = {
         borderTop: "2px solid blue"
     },
     All: {
-        color: "#00334d"
+        color: "#00334d",
+        borderBottom: "2px solid blue",
+        paddingBottom: "10px"
     },
     Tags: {
         Container: {
             display: "flex",
             flexDirection: "column",
-            gap: "8px"
+            gap: "8px",
         }
     },
     Comments: {
