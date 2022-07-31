@@ -2,3 +2,7 @@ a:hover, li:hover {
     color: rgb(22, 37, 243);
     text-decoration: underline;
 }
+.highlight:hover { 
+    box-shadow: 0 0 3px 3px orange;
+    color: "green"
+}

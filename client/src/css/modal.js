@@ -23,15 +23,16 @@ export const ModalCSS = {
         width: "100%",
         height: "100vh",
         backgroundColor: "black",
-        opacity: ".8",
+        opacity: ".9",
         zIndex: "2"
     },
     innerModal: {
         display: "flex",
         flexDirection: "column",
+        alignItems: "center",
         gap: "10px",
         padding: "10px 40px",
-        width: "40%",
+        width: "100%",
         backgroundColor: "white",
         opacity: "1",
         zIndex: "3"

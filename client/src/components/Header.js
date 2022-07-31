@@ -4,6 +4,9 @@ import { Modal } from './modal';
 import { HeaderCSS } from '../css/header';
 import Logo from '../images/logo.jpg';
 
+// Stripe
+// import StripeCheckout from 'react-stripe-checkout';
+
 import Auth from '../utils/auth';
 import { useMediaQuery } from "../utils/useMediaQuery";
 
@@ -17,6 +20,10 @@ export const Header = () => {
 
     // CSS only
     const isSmall = useMediaQuery('(min-width: 500px)');
+
+    // const makeDonation = (token, addresses) => {
+    //     console.log(token, addresses)
+    // }
 
     return (
         <>

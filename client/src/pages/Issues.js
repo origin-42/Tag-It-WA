@@ -10,6 +10,9 @@ import { FaQuoteLeft, FaQuoteRight } from 'react-icons/fa';
 // Media
 import { useMediaQuery } from "../utils/useMediaQuery";
 
+// Animations
+import '../css/animations.css';
+
 export const Issues = () => {
 
     // Get the coordinates once user accepts.
@@ -135,9 +138,14 @@ export const Issues = () => {
                     id="notifyUser" 
                     name="notifyUser" 
                     onClick={(e) => handleNotifications(e)}
-                    style={Button.smallBlue}>Yes</button>
+                    style={Button.smallBlue} 
+                    >Yes</button>
 
-                <input type="submit" value="Add this Tag" style={Button.smallBlue}></input>
+                <input 
+                    type="submit" 
+                    value="Add this Tag" 
+                    style={Button.smallBlue}
+                    ></input>
             </form>
 
         </section>
