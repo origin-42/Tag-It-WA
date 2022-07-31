@@ -8,6 +8,9 @@ import { Link } from 'react-router-dom';
 import { TagSectionsCSS } from '../css/tagsSections';
 import { Button } from '../css/button';
 
+// Media
+import { useMediaQuery } from "../utils/useMediaQuery";
+
 import { FaRegArrowAltCircleLeft, FaMapPin, FaExclamation } from 'react-icons/fa';
 import { BsPersonCircle } from 'react-icons/bs';
 
@@ -20,6 +23,9 @@ export const MoreInfo = () => {
     const { loading, error, data } = useQuery(QUERY_TAG, {
         variables: { _id: newQuery }
     });
+
+    // CSS only
+    const isMedium = useMediaQuery('(min-width: 900px)');
   
     const [newComment, createComment] = useState({
         description: "",
@@ -78,7 +84,7 @@ export const MoreInfo = () => {
    
     return (
         <section id='moreInfoSection' style={TagSectionsCSS.tags.moreInfoSection}>
-            <section id='moreInfoWrapper' style={TagSectionsCSS.tags.moreInfoWrapper}>
+            <section id='moreInfoWrapper' style={isMedium? TagSectionsCSS.tags.moreInfoWrapper: TagSectionsCSS.tags.moreInfoWrapperMd}>
                 <article id='moreInfoHead' style={TagSectionsCSS.tags.secLeft}>
                     <div style={TagSectionsCSS.tags.titles}>
                         <h2>TAG DETAILS</h2>
@@ -124,7 +130,7 @@ export const MoreInfo = () => {
                         <Link to="/dashboard" title="Back to dashboard"><FaRegArrowAltCircleLeft style={TagSectionsCSS.tags.previous} /></Link>
                     </div>
                 </article>
-                <section id='moreInfoComments' style={TagSectionsCSS.tags.secRight}>
+                <section id='moreInfoComments' style={isMedium? TagSectionsCSS.tags.secRight: TagSectionsCSS.tags.secRightMd}>
                     <div style={TagSectionsCSS.tags.titles}>
                         <h2>COMMENTS</h2>
                     </div>

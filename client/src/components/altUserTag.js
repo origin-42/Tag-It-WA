@@ -8,6 +8,9 @@ import { Link } from 'react-router-dom';
 import { TagSectionsCSS } from '../css/tagsSections';
 import { Button } from '../css/button';
 
+// Media
+import { useMediaQuery } from "../utils/useMediaQuery";
+
 import { FaRegArrowAltCircleLeft, FaMapPin, FaExclamation } from 'react-icons/fa';
 import { BsPersonCircle } from 'react-icons/bs';
 
@@ -27,6 +30,9 @@ export const AltUserTag = () => {
         tag: "", 
         repliedUser: ""
     });
+
+    // CSS only
+    const isMedium = useMediaQuery('(min-width: 900px)');
 
     const [ addComment, { error: addCommentError } ] = useMutation(ADD_COMMENT);
     const [ updateComment, { error: updateTagError } ] = useMutation(UPDATE_TAG);
@@ -101,7 +107,7 @@ export const AltUserTag = () => {
  
     return (
         <section id='alertsSection' style={TagSectionsCSS.alerts.alertsSection}>
-            <section id='alertsWrapper' style={TagSectionsCSS.alerts.alertsWrapper}>
+            <section id='alertsWrapper' style={isMedium? TagSectionsCSS.alerts.alertsWrapper: TagSectionsCSS.alerts.alertsWrapperMd}>
                 <article id='alertsHead' style={TagSectionsCSS.alerts.secLeft}>
                     <div style={TagSectionsCSS.alerts.titles}>
                         <h2>YOUR COMMENT DETAILS</h2>
@@ -160,7 +166,7 @@ export const AltUserTag = () => {
                         <Link to="/dashboard" title="Back to dashboard"><FaRegArrowAltCircleLeft style={TagSectionsCSS.alerts.previous} /></Link>
                     </div>
                 </article>
-                <section style={TagSectionsCSS.alerts.secRight}>
+                <section style={isMedium? TagSectionsCSS.alerts.secRight: TagSectionsCSS.alerts.secRightMd}>
                     <div style={TagSectionsCSS.alerts.titles}>
                         <h2>COMMENTS</h2>
                     </div>

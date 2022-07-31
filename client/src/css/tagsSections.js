@@ -3,12 +3,18 @@ export const TagSectionsCSS = {
         moreInfoSection: {
             backgroundColor: "#045de9",
             backgroundImage: "linear-gradient(180deg, white, #09c6f9 74%)",
-            height: "200vh",
+            height: "300vh",
             borderTop: "10px groove blue"
         },
         moreInfoWrapper: {
             display: "grid",
             gridTemplateColumns: "1fr 2fr",
+            justifyContent: "space-around",
+            fontSize: "1.5rem"
+        },
+        moreInfoWrapperMd: {
+            display: "grid",
+            gridTemplateColumns: "1fr",
             justifyContent: "space-around",
             fontSize: "1.5rem"
         },
@@ -23,6 +29,12 @@ export const TagSectionsCSS = {
             display: "flex",
             flexDirection: "column",
             borderLeft: "10px solid blue",
+            gap: "20px",
+        },
+        secRightMd: {
+            padding: "20px",
+            display: "flex",
+            flexDirection: "column",
             gap: "20px",
         },
         titles: {
@@ -73,12 +85,18 @@ export const TagSectionsCSS = {
         myCommentsSection: {
             backgroundColor: "#045de9",
             backgroundImage: "linear-gradient(180deg, white, #09c6f9 74%)",
-            height: "200vh",
+            height: "300vh",
             borderTop: "10px groove blue"
         },
         myCommentsWrapper: {
             display: "grid",
             gridTemplateColumns: "1fr 2fr",
+            justifyContent: "space-around",
+            fontSize: "1.5rem"
+        },
+        myCommentsWrapperMd: {
+            display: "grid",
+            gridTemplateColumns: "1fr",
             justifyContent: "space-around",
             fontSize: "1.5rem"
         },
@@ -93,6 +111,12 @@ export const TagSectionsCSS = {
             display: "flex",
             flexDirection: "column",
             borderLeft: "10px solid blue",
+            gap: "20px",
+        },
+        secRightMd: {
+            padding: "20px",
+            display: "flex",
+            flexDirection: "column",
             gap: "20px",
         },
         titles: {
@@ -143,12 +167,18 @@ export const TagSectionsCSS = {
         alertsSection: {
             backgroundColor: "#045de9",
             backgroundImage: "linear-gradient(180deg, white, #09c6f9 74%)",
-            height: "200vh",
+            height: "300vh",
             borderTop: "10px groove blue"
         },
         alertsWrapper: {
             display: "grid",
             gridTemplateColumns: "1fr 2fr",
+            justifyContent: "space-around",
+            fontSize: "1.5rem"
+        },
+        alertsWrapperMd: {
+            display: "grid",
+            gridTemplateColumns: "1fr",
             justifyContent: "space-around",
             fontSize: "1.5rem"
         },
@@ -163,6 +193,12 @@ export const TagSectionsCSS = {
             display: "flex",
             flexDirection: "column",
             borderLeft: "10px solid blue",
+            gap: "20px",
+        },
+        secRightMd: {
+            padding: "20px",
+            display: "flex",
+            flexDirection: "column",
             gap: "20px",
         },
         titles: {
@@ -222,6 +258,9 @@ export const TagSectionsCSS = {
             justifyContent: "space-around",
             fontSize: "1.5rem"
         },
+        managementWrapperSm: {
+
+        },
         secLeft: {
             padding: "20px",
             display: "flex",
@@ -234,6 +273,12 @@ export const TagSectionsCSS = {
             flexDirection: "column",
             gap: "20px",
             borderLeft: "10px solid blue",
+        },
+        secRightSm: {
+            padding: "20px",
+            display: "flex",
+            flexDirection: "column",
+            gap: "20px",
         },
         titles: {
             textAlign: "center",

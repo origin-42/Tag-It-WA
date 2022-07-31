@@ -5,6 +5,7 @@ import { HeaderCSS } from '../css/header';
 import Logo from '../images/logo.jpg';
 
 import Auth from '../utils/auth';
+import { useMediaQuery } from "../utils/useMediaQuery";
 
 export const Header = () => {
 
@@ -14,10 +15,13 @@ export const Header = () => {
         showModal ? setShowModal(false): setShowModal(true)
     }
 
+    // CSS only
+    const isSmall = useMediaQuery('(min-width: 500px)');
+
     return (
         <>
             <section id="navbar">
-                <section id="nav-container" style={HeaderCSS.navContainer}>
+                <section id="nav-container" style={isSmall ? HeaderCSS.navContainer : HeaderCSS.navContainerSm}>
                     
                     <img id='logo' src={Logo} alt='Logo' style={HeaderCSS.img}></img>
 

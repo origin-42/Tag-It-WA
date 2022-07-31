@@ -4,6 +4,9 @@ import { googleMapCSS } from '../css/googleMap';
 import { ConfirmLocation } from '../components/ConfirmLocation';
 import { SpeechBubbles } from '../css/speechBubbles';
 
+// Media
+import { useMediaQuery } from "../utils/useMediaQuery";
+
 const APIKEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 
 const mapConfig = {
@@ -20,6 +23,9 @@ export const Report = () => {
     });
 
     const [marker, setMarker] = useState({ lat: -31.932012253587, lng: 115.85712796810994 });
+
+    // CSS only
+    const isLarge = useMediaQuery('(min-width: 1500px)');
 
     const mapRef = useRef();
     const onMapLoad = useCallback((map) => {
@@ -67,11 +73,11 @@ export const Report = () => {
     }
     
     return (
-        <section id="report" style={googleMapCSS.reportSection}>
+        <section id="report" style={isLarge ? googleMapCSS.reportSection : googleMapCSS.reportSectionLg}>
             <section id="report-container" style={googleMapCSS.reportContainer}>
 
-                <div style={googleMapCSS.mapContainer}>
-                    <article id='directions-left' style={googleMapCSS.speechContainer}>
+                <div style={isLarge ? googleMapCSS.mapContainer : googleMapCSS.mapContainerLg} id="map-grid">
+                    <article id='directions-left' style={isLarge ? googleMapCSS.speechContainer : googleMapCSS.speechContainerLg}>
                         <div style={SpeechBubbles.speechBox}>Search by address or geolocation</div>
                         <div style={SpeechBubbles.speechBox}>Click to drop a pin</div>
                     </article>
@@ -92,7 +98,7 @@ export const Report = () => {
                         </GoogleMap>
                     </article>
 
-                    <article id='directions-right' style={googleMapCSS.speechContainer}>
+                    <article id='directions-right' style={isLarge ? googleMapCSS.speechContainer : googleMapCSS.speechContainerLg}>
                         <div style={SpeechBubbles.speechBox}>Confirm your location</div>
                         <div style={SpeechBubbles.speechBox}>Add it for others to find</div>
                     </article>

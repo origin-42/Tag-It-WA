@@ -4,6 +4,11 @@ import { IssuesCSS } from '../css/issues';
 import { criteriaData } from '../utils/criteriaData';
 import { ADD_TAG } from '../utils/mutations';
 import { useMutation } from '@apollo/client';
+import { Button } from '../css/button';
+import { FaQuoteLeft, FaQuoteRight } from 'react-icons/fa';
+
+// Media
+import { useMediaQuery } from "../utils/useMediaQuery";
 
 export const Issues = () => {
 
@@ -21,6 +26,9 @@ export const Issues = () => {
         confirmed: 0,
         denied: 0
     });
+
+    // CSS only
+    const isSmall = useMediaQuery('(min-width: 600px)');
 
     const [ addTag, { error } ] = useMutation(ADD_TAG);
 
@@ -81,16 +89,28 @@ export const Issues = () => {
    return (
     // Pick from a bunch of criteria
     // Make a description
-    <section id="issues-section">
-        <section id="issues-container">
+    <section id="issues-section" style={IssuesCSS.issuesSection}>
+        <section id="issues-container" style={isSmall? IssuesCSS.issuesContainer: IssuesCSS.issuesContainerSm}>
 
-            <h2>Add some information to help address this issue</h2>
+            <div style={IssuesCSS.quoteContainer}>
+                <h2 style={IssuesCSS.mainTitle}><FaQuoteLeft /> Add some information to help others address this issue <FaQuoteRight style={IssuesCSS.quote} /></h2>
+            </div>
+            
 
-            <form onSubmit={(e) => handleSubmit(e)} style={IssuesCSS.issuesContainer}>
+            <form 
+                onSubmit={(e) => handleSubmit(e)} 
+                style={IssuesCSS.form}
+            >
 
                 {/* Criteria Selection */}
-                <label htmlFor="criteria">Select Criteria</label>
-                <select type="select" id="criteria" name="criteria" onChange={() => updateCriteria()}>
+                <label htmlFor="criteria" title="Criteria for issue" style={IssuesCSS.title}>Select Criteria</label>
+                <select 
+                    type="select" 
+                    id="criteria" 
+                    name="criteria" 
+                    onChange={() => updateCriteria()}
+                    style={IssuesCSS.options}
+                    >
                     <option>No Selection</option>
                     {criteriaData.map((criteria) => {
                         const subString = criteria[0].toUpperCase() + criteria.substring(1);
@@ -99,14 +119,25 @@ export const Issues = () => {
                 </select>
 
                 {/* Description */}
-                <label htmlFor="description">Make a Description</label>
-                <input id="description" name="description" type="text" placeholder="Golden retriever puppy" onChange={changeDescription}></input>
+                <label htmlFor="description" title="Description of issue" style={IssuesCSS.title}>Make a Description</label>
+                <input 
+                    id="description" 
+                    name="description" 
+                    type="text" 
+                    placeholder="Golden retriever puppy" 
+                    onChange={changeDescription}
+                    style={IssuesCSS.options}
+                    ></input>
 
                 {/* User Notifications */}
-                <label htmlFor="notifyUser">Would you like to receive notifications on updates?</label>
-                <button id="notifyUser" name="notifyUser" onClick={(e) => handleNotifications(e)}>Yes</button>
+                <label htmlFor="notifyUser" title="Would you like ot receive notifications?" style={IssuesCSS.title}>Would you like to receive notifications on updates?</label>
+                <button 
+                    id="notifyUser" 
+                    name="notifyUser" 
+                    onClick={(e) => handleNotifications(e)}
+                    style={Button.smallBlue}>Yes</button>
 
-                <input type="submit" value="Add this Tag"></input>
+                <input type="submit" value="Add this Tag" style={Button.smallBlue}></input>
             </form>
 
         </section>

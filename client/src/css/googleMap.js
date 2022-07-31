@@ -5,13 +5,20 @@ export const googleMapCSS = {
         alignItems: "center",
         height: "100vh",
     },
+    reportSectionLg: {
+        height: "inherit"
+    },
     mapContainer: {
         display: "grid",
         gridTemplateColumns: "1fr 2fr 1fr"
     },
+    mapContainerLg: {
+        display: "grid",
+        gridTemplateColumns: "1fr"
+    },
     googleMap: {
         display: "flex",
-        width: "1100px",
+        width: "68rem",
         height: "600px",
         border: "10px groove blue",
         boxShadow: "0 0 4px 2px black",
@@ -32,12 +39,17 @@ export const googleMapCSS = {
     reportContainer: {
         display: "flex",
         flexDirection: "column",
+        flexWrap: "wrap",
         alignItems: "center",
         gap: "30px"
     },
     speechContainer: {
         display: "flex",
         flexDirection: "column",
+        justifyContent: "space-between"
+    },
+    speechContainerLg: {
+        display: "flex",
         justifyContent: "space-between"
     }
 }

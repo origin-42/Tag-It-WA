@@ -8,6 +8,9 @@ import { useState } from 'react';
 import { TagSectionsCSS } from '../css/tagsSections';
 import { Button } from '../css/button';
 
+// Media
+import { useMediaQuery } from "../utils/useMediaQuery";
+
 import { BsPersonCircle } from 'react-icons/bs';
 import { AiOutlineWarning, AiFillMessage } from 'react-icons/ai';
 
@@ -23,6 +26,9 @@ export const ManageAlerts = ({ setCriteriaState }) => {
         criteria: "",
         criteriaData: []
     })
+
+    // CSS only
+    const isMedium = useMediaQuery('(min-width: 900px)');
     
     const { loading, error } = useQuery(QUERY_USER);
     if (error) {
@@ -56,7 +62,7 @@ export const ManageAlerts = ({ setCriteriaState }) => {
 
     return (
         <section id='manageAlertsPage' style={TagSectionsCSS.management.managementSection}>
-            <section id='manageAlertsPageContainer' style={TagSectionsCSS.management.managementWrapper}>
+            <section id='manageAlertsPageContainer' style={isMedium? TagSectionsCSS.management.managementWrapper: TagSectionsCSS.management.managementWrapperSm}>
                 <article id='manageAlertsBox' style={TagSectionsCSS.management.secLeft}>
                     <div style={TagSectionsCSS.management.titles}>
                         <h2>MANAGE ALERTS</h2>
@@ -87,7 +93,7 @@ export const ManageAlerts = ({ setCriteriaState }) => {
                     
                 </article>
                 
-                <section id='alertDetails' style={TagSectionsCSS.management.secRight}>
+                <section id='alertDetails' style={isMedium? TagSectionsCSS.management.secRight: TagSectionsCSS.management.secRightSm}>
                     <div style={TagSectionsCSS.management.titles}>
                         <h2>Issues Related to Criteria</h2>
                     </div>
