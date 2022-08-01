@@ -76,7 +76,6 @@ export const CommentInfo = () => {
         const { name, value } = event.target;
         createComment({
           ...newComment,
-          user: data.tag.user._id, 
           tag: data.tag._id, 
           [name]: value,
         });

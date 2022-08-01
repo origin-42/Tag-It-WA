@@ -36,8 +36,14 @@ export const AltUserTag = () => {
 
     const [ addComment, { error: addCommentError } ] = useMutation(ADD_COMMENT);
     const [ updateComment, { error: updateTagError } ] = useMutation(UPDATE_TAG);
-    const [confirmations, setConfirms] = useState(1)
-    console.log(confirmations)
+    
+    if (error) {
+        console.log(error)
+        alert("Error")
+        return 
+    } else if (loading) {
+        return <div>Loading data</div>
+    }
 
     const handleComment = async (e) => {
         e.preventDefault()
@@ -63,21 +69,12 @@ export const AltUserTag = () => {
         });
         showCommentSec(false);
     }
-    
-    if (error) {
-        console.log(error)
-        alert("Error")
-        return 
-    } else if (loading) {
-        return <div>Loading data</div>
-    }
 
     const changeComment = (event) => {
         const { name, value } = event.target;
         createComment({
           ...newComment,
-          user: data.tag.user._id, 
-          tag: data.tag._id, 
+          tag: data.tag._id,
           [name]: value,
         });
     };
@@ -104,7 +101,7 @@ export const AltUserTag = () => {
     
     const { lat, lng, criteria, date, confirmed, denied, description, comments, user } = data.tag;
     const subString = criteria[0].toUpperCase() + criteria.substring(1);
- 
+    console.log(data.tag)
     return (
         <section id='alertsSection' style={TagSectionsCSS.alerts.alertsSection}>
             <section id='alertsWrapper' style={isMedium? TagSectionsCSS.alerts.alertsWrapper: TagSectionsCSS.alerts.alertsWrapperMd}>
@@ -176,6 +173,7 @@ export const AltUserTag = () => {
                     </div>
                     <section style={TagSectionsCSS.alerts.comments}>
                             {comments.map((comment) => {
+                             
                                 return (
                                     <article key={comment._id} className="altTagComment">
                                         <div style={TagSectionsCSS.alerts.confirmations}>

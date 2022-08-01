@@ -44,7 +44,7 @@ const resolvers = {
                         model: 'Users'
                     }
                 });
-               
+              
                 return tag
 
             } catch (err) {
@@ -163,7 +163,7 @@ const resolvers = {
             if (context.user) {
                 const newComment = {
                     description: args.description,
-                    user: args.user,
+                    user: context.user._id,
                     tag: args._id,
                     repliedUser: args.repliedUser || null,
                     date: Date.now()
