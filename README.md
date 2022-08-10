@@ -1,6 +1,6 @@
 <div align="center">
 
-![snippet](./client/src/images/logo.png)
+![snippet](./client/src/images/logo.jpg)
 
 </div>
 
