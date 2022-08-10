@@ -43,6 +43,7 @@ const typeDefs = gql`
         user: User
         queryAUser: User
         tags: [ Tag ]
+        getAllTags: [ User ]
         tag( _id: ID ): Tag 
         getCriteria( criteria: String! ): [ Tag ]
         comments: [ Comment ]

@@ -1,8 +1,13 @@
-import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { googleMapCSS } from '../css/googleMap';
 import { ConfirmLocation } from '../components/ConfirmLocation';
 import { SpeechBubbles } from '../css/speechBubbles';
+
+// Map components
+import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
+import { PanTo } from '../components/ReportPage/panTo';
+import { Markers } from '../components/ReportPage/Markers';
+import { Circle } from '@react-google-maps/api';
 
 // Media
 import { useMediaQuery } from "../utils/useMediaQuery";
@@ -16,6 +21,10 @@ const mapConfig = {
     }
 }
 
+const circleConfig = {
+    strokeColor: '#FF0000'
+}
+
 export const Report = () => {
 
     const { isLoaded } = useJsApiLoader({
@@ -23,6 +32,9 @@ export const Report = () => {
     });
 
     const [marker, setMarker] = useState({ lat: -31.932012253587, lng: 115.85712796810994 });
+    const [initialCoords, setInitialCoords] = useState({ lat: -31.932012253587, lng: 115.85712796810994 });
+    const [markerCoords, setMarkers] = useState(false);
+    const [circleInfo, setCircleInfo] = useState({})
 
     // CSS only
     const isLarge = useMediaQuery('(min-width: 1500px)');
@@ -38,7 +50,11 @@ export const Report = () => {
                 setMarker({
                     lat: e.coords.latitude,
                     lng: e.coords.longitude
-                })
+                });
+                setInitialCoords({
+                    lat: e.coords.latitude,
+                    lng: e.coords.longitude
+                });
             }
         )
     };
@@ -57,7 +73,6 @@ export const Report = () => {
     localStorage.setItem("coords", JSON.stringify(marker))
 
     const options = {
-        zoomControl: false,
         streetViewControl: false,
         fullscreenControl: false
     }
@@ -91,11 +106,28 @@ export const Report = () => {
                             onClick={(e) => handleClick(e)}
                             onLoad={onMapLoad}
                         >
+
+                            <Circle 
+                                center={marker}
+                                radius={1000} // Represents metres from target click as radius
+                                onLoad={(circle) => setCircleInfo(circle)}
+                                options={circleConfig}
+                            />
+                            {/* Marker for user click */}
                             <Marker 
                                 key={marker.date}
                                 position={marker}
                             />
+
+                            {/* Markers for criteria */}
+                            {markerCoords && (
+                                <Markers circleInfo={circleInfo} marker={marker} />
+                            )}
+
                         </GoogleMap>
+
+                        <button onClick={() => markerCoords? setMarkers(false): setMarkers(true)}>Show Neaby Issues</button>
+                        <PanTo initialCoords={initialCoords} setMarker={setMarker} />
                     </article>
 
                     <article id='directions-right' style={isLarge ? googleMapCSS.speechContainer : googleMapCSS.speechContainerLg}>

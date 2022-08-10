@@ -53,6 +53,23 @@ const resolvers = {
 
         },
 
+        getAllTags: async (parent, args) => {
+            try {
+                const userData = await Users.find().populate('tags').populate({
+                    path: 'tags',
+                    populate: {
+                        path: 'user',
+                        model: 'Users'
+                    }
+                });
+      
+                return userData;
+            } catch(err) {
+                console.log(err)
+            }
+            
+        },
+
         getCriteria: async (parent, { criteria }) => {
 
             const subString = criteria[0].toUpperCase() + criteria.substring(1);

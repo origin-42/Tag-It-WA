@@ -106,3 +106,23 @@ export const QUERY_TAG = gql`
         }
     }
 `;
+
+export const QUERY_ALL_TAGS = gql`
+    {
+        getAllTags {
+            _id
+            tags {
+                _id
+                date
+                lat
+                lng
+                criteria
+                description
+                user {
+                    _id
+                    username
+                }
+            }
+        }
+    }
+`;
