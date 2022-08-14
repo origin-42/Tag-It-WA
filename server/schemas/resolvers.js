@@ -3,7 +3,6 @@ const { Users, Tags, Comments } = require('../models');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
-
     // Queries
     Query: {
 
@@ -141,6 +140,10 @@ const resolvers = {
         addTag: async (parent, args, context) => {
         
             if (context.user) {
+                const unbase = args.image;
+                args.image = ""
+                console.log(unbase)
+
                 const user = await Users.findById(context.user._id)
                 args.user = user._id
           

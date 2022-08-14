@@ -35,6 +35,7 @@ export const ADD_TAG = gql`
     $lat: Float
     $lng: Float
     $date: String
+    $image: String
     $criteria: String
     $description: String
     $active: Boolean
@@ -47,6 +48,7 @@ export const ADD_TAG = gql`
       lat: $lat
       lng: $lng
       date: $date
+      image: $image
       criteria: $criteria
       description: $description
       active: $active

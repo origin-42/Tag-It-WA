@@ -13,6 +13,9 @@ const tagsSchema = new Schema({
     type: Date,
     default: Date.now
   },
+  image: {
+    type: String,
+  },
   criteria: {
     type: String,
     required: true

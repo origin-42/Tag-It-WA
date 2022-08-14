@@ -21,6 +21,7 @@ export const Issues = () => {
         lat: coords.lat,
         lng: coords.lng,
         date: Date.now,
+        image: "",
         criteria: "",
         description: "",
         active: true,
@@ -73,7 +74,7 @@ export const Issues = () => {
                 notifyUser: false
             });
         };
-    }
+    };
 
     const changeDescription = (event) => {
         const { name, value } = event.target;
@@ -87,7 +88,13 @@ export const Issues = () => {
         let value = document.querySelector("#criteria").value
         value = value[0].toUpperCase() + value.substring(1)
         changeDetails({ ...details, criteria: value })
-    }
+    };
+
+    const handleImage = (e) => {
+        const file = e.target.files[0];
+
+        changeDetails({ ...details, image: file });
+    };
     
    return (
     // Pick from a bunch of criteria
@@ -129,6 +136,19 @@ export const Issues = () => {
                     type="text" 
                     placeholder="Golden retriever puppy" 
                     onChange={changeDescription}
+                    style={IssuesCSS.options}
+                    ></input>
+
+                {/* Image */}
+                <label htmlFor="image" title="Image upload" style={IssuesCSS.title}>Add an Image of the Issue</label>
+                <input 
+                    id="image" 
+                    name="image" 
+                    type="file" 
+                    placeholder="Golden retriever puppy" 
+                    accept="image/*"
+                    size={14000}
+                    onChange={handleImage}
                     style={IssuesCSS.options}
                     ></input>
 

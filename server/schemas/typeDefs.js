@@ -1,6 +1,12 @@
 const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
+    type File {
+        filename: String!
+        mimetype: String!
+        encoding: String!
+    }
+
     type User {
         _id: ID
         username: String
@@ -14,6 +20,7 @@ const typeDefs = gql`
         lat: Float 
         lng: Float 
         date: String
+        Image: String
         criteria: String!
         description: String
         active: Boolean
@@ -74,6 +81,7 @@ const typeDefs = gql`
             lat: Float
             lng: Float
             date: String
+            image: String
             criteria: String
             description: String
             active: Boolean
