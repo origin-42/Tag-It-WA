@@ -3,12 +3,17 @@ import { googleMapCSS } from '../css/googleMap';
 import { ConfirmLocation } from '../components/ConfirmLocation';
 import { SpeechBubbles } from '../css/speechBubbles';
 
+
+import { convertAddress } from '../utils/helper';
+
 // Map components
 import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
 import { PanTo } from '../components/ReportPage/panTo';
 import { Markers } from '../components/ReportPage/Markers';
 import { Circle } from '@react-google-maps/api';
 import Geocode from "react-geocode";
+
+
 
 // Media
 import { useMediaQuery } from "../utils/useMediaQuery";
@@ -82,9 +87,7 @@ export const Report = () => {
     const handleClick = async (e) => {
         if (e.latLng.lat && e.latLng.lng) {
             const reponse = await Geocode.fromLatLng(e.latLng.lat(), e.latLng.lng());
-            console.log(reponse.results[0])
-            console.log(reponse.results[0].address_components[4].short_name)
-            const address = reponse.results[0].address_components[4].short_name;
+            const address = convertAddress(reponse)
             setMarker({
                 lat: e.latLng.lat(),
                 lng: e.latLng.lng(),

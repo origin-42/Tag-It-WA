@@ -21,6 +21,22 @@ export const measureDistance = (point1, point2, distance) => {
     return false;
 };
 
+export const convertAddress = (addressData) => {
+    let state;
+    for (let i = 0; i < addressData.results[0].address_components.length; i++) {
+      for (let j = 0; j < addressData.results[0].address_components[i].types.length; j++) {
+        switch (addressData.results[0].address_components[i].types[j]) {
+          case "administrative_area_level_1":
+            state = addressData.results[0].address_components[i].long_name;
+            break;
+          default:
+            state = "undefined";
+        }
+      }
+    }
+    return state;
+}
+
 const strayImg = require('../images/criteriaIcons/stray.png');
 const hazardImg = require('../images/criteriaIcons/hazard.png');
 const soundImg = require('../images/criteriaIcons/sound.png');
