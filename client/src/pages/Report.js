@@ -77,8 +77,11 @@ export const Report = () => {
         fullscreenControl: false
     }
 
-    const handleClick = (e) => {
+    const handleClick = async (e) => {
         if (e.latLng.lat && e.latLng.lng) {
+            const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${e.latLng.lat},${e.latLng.lng}&key=${APIKEY}`);
+            const data = await response.json()
+            console.log(data)
             setMarker({
                 lat: e.latLng.lat(),
                 lng: e.latLng.lng(),
