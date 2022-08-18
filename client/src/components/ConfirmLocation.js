@@ -12,7 +12,7 @@ export const ConfirmLocation = ({marker}) => {
         const data = await response.json()
         return data
     })
-console.log(address)
+console.log(address.current())
 
     const errorMessage = () => {
         const span = document.querySelector("#locErrorMessage");
