@@ -14,7 +14,7 @@ export const ConfirmLocation = ({marker}) => {
     return (
         Auth.loggedIn()? (
             <div id="locationSelection" style={Button.reportButton}>
-                <span>{marker.address ? <Link to="/Issues">Confirm Location?</Link>: <button onClick={() => alert("Please select a location within WA")}></button>}</span>
+                <span>{marker.address === "WA" ? <Link to="/Issues">Confirm Location?</Link>: <button onClick={() => alert("Please select a location within WA")}></button>}</span>
             </div>
         ) : (
             <div id="locationSelection" style={Button.reportButton}>
