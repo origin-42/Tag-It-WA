@@ -4,15 +4,17 @@ import { ConfirmLocation } from '../components/ConfirmLocation';
 import { SpeechBubbles } from '../css/speechBubbles';
 
 // Map components
-import { GoogleMap, useJsApiLoader, Marker, geocoder } from '@react-google-maps/api';
+import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
 import { PanTo } from '../components/ReportPage/panTo';
 import { Markers } from '../components/ReportPage/Markers';
 import { Circle } from '@react-google-maps/api';
+import Geocode from "react-geocode";
 
 // Media
 import { useMediaQuery } from "../utils/useMediaQuery";
 
 const APIKEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
+Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
 
 const mapConfig = {
     style: {
@@ -79,12 +81,14 @@ export const Report = () => {
 
     const handleClick = async (e) => {
         if (e.latLng.lat && e.latLng.lng) {
-            const address = geocoder.geocode({ lat: e.latLng.lat(), lng: e.latLng.lng() });
+            const reponse = await Geocode.fromLatLng(e.latLng.lat(), e.latLng.lng());
+            const address = reponse.results[0].formatted_address;
             console.log(address)
             setMarker({
                 lat: e.latLng.lat(),
                 lng: e.latLng.lng(),
-                date: Date.now()
+                date: Date.now(),
+                address: address
             })
         }
     };
