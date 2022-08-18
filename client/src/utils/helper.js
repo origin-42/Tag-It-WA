@@ -22,26 +22,16 @@ export const measureDistance = (point1, point2, distance) => {
 };
 
 export const convertAddress = (addressData) => {
-    let city, state, country;
-    for (let i = 0; i < addressData.results[0].address_components.length; i++) {
-      for (let j = 0; j < addressData.results[0].address_components[i].types.length; j++) {
-        switch (addressData.results[0].address_components[i].types[j]) {
-          case "locality":
-            city = addressData.results[0].address_components[i].long_name;
-            break;
-          case "administrative_area_level_1":
-            state = addressData.results[0].address_components[i].long_name;
-            break;
-          case "country":
-            country = addressData.results[0].address_components[i].long_name;
-            break;
-          default:
-            state = "undefined";
-        }
-      }
-    }
-    return state
-}
+    let state;
+    addressData.results[0].address_components.forEach(component => {
+        component.types.forEach(type => {
+            if (type === "administrative_area_level_1") {
+                state = component.short_name;
+            };
+        });
+    });
+    return state;
+};
 
 const strayImg = require('../images/criteriaIcons/stray.png');
 const hazardImg = require('../images/criteriaIcons/hazard.png');
