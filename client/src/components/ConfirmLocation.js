@@ -1,5 +1,5 @@
 import Auth from '../utils/auth';
-import { Button } from '../css/buttons';
+import { Button } from '../css/button';
 
 export const ConfirmLocation = ({address}) => {
     const errorMessage = () => {
@@ -20,11 +20,11 @@ export const ConfirmLocation = ({address}) => {
     
     return (
         Auth.loggedIn()? (
-            <div id="locationSelection" style={Button.reportButton}>
+            <div id="locationSelection" style={Button.blue}>
                 <button onClick={confirmLoc}>Confirm Location?</button>
             </div>
         ) : (
-            <div id="locationSelection" style={Button.reportButton}>
+            <div id="locationSelection" style={Button.blue}>
                 <button id='locErrorMessage' onClick={errorMessage}>Confirm Location?</button>
             </div>
         )
