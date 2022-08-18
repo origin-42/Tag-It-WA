@@ -58,7 +58,7 @@ export const Dashboard = () => {
 
     return (
         <section id='dashboard'  style={DashboardCSS.dashboard}>
-            <h2 style={DashboardCSS.centerHeaderLrg}>WELCOME TO YOUR <span>DASHBOARD,</span> {data.user.username}</h2>
+            <h2 style={DashboardCSS.centerHeaderLrg}>Welcome to your <span>Dashboard,</span> {data.user.username}</h2>
 
             <section id='dashboard-container' style={DashboardCSS.dashboardContainer}>
 
@@ -102,12 +102,15 @@ export const Dashboard = () => {
                             )
                         })}
                         {!userCriteria.current() && <h4>No Alerts set</h4>}
+                        
+                        <div style={DashboardCSS.manageAlertsBox}>
+                            <button id='manageNotifications' style={Button.evenPaddingBlue}><Link to="/manageAlerts">Manage Alerts</Link></button>
+                        </div>
                     </article>
                 </article>
 
-                <button id='manageNotifications' style={Button.evenPaddingBlue}><Link to="/manageAlerts">Manage Alerts</Link></button>
+                <button id='deleteProfile' onClick={removeAccount} style={Button.evenPaddingBlue}>Delete Account</button>
 
-                <button id='deleteProfile' onClick={removeAccount} style={Button.evenPaddingBlue}>Remove Account</button>
             </section>
         </section>
     

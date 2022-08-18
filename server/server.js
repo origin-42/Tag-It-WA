@@ -16,8 +16,8 @@ const server = new ApolloServer({
   context: authMiddleware,
 });
 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+app.use(express.urlencoded({ limit: '5mb', extended: true }));
+app.use(express.json({ limit: '5mb' }));
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
@@ -30,6 +30,7 @@ if (process.env.NODE_ENV === 'production') {
 
 const startApolloServer = async (typeDefs, resolvers) => {
   await server.start();
+
   server.applyMiddleware({ app });
   
   db.once('open', () => {

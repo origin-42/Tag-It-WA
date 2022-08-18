@@ -1,6 +1,7 @@
 const { AuthenticationError } = require('apollo-server-express');
 const { Users, Tags, Comments } = require('../models');
 const { signToken } = require('../utils/auth');
+const fs = require("fs");
 
 const resolvers = {
     // Queries
@@ -138,11 +139,16 @@ const resolvers = {
 
         // Add a new tag
         addTag: async (parent, args, context) => {
-        
+     
             if (context.user) {
-                const unbase = args.image;
-                args.image = ""
-                console.log(unbase)
+                // Handle image upload
+                if (args.image) {
+                    let image = Buffer.from(args.image, 'base64');
+                    fs.writeFile("./schemas/image/newImage.jpg", image, (err) => {
+                        if (err) throw err;
+                        console.log("File Saved");
+                    });
+                };
 
                 const user = await Users.findById(context.user._id)
                 args.user = user._id

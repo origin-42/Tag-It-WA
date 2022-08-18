@@ -6,6 +6,7 @@ import { ADD_TAG } from '../utils/mutations';
 import { useMutation } from '@apollo/client';
 import { Button } from '../css/button';
 import { FaQuoteLeft, FaQuoteRight } from 'react-icons/fa';
+import { toBase64 } from '../utils/helper';
 
 // Media
 import { useMediaQuery } from "../utils/useMediaQuery";
@@ -90,10 +91,10 @@ export const Issues = () => {
         changeDetails({ ...details, criteria: value })
     };
 
-    const handleImage = (e) => {
+    const handleImage = async (e) => {
         const file = e.target.files[0];
-
-        changeDetails({ ...details, image: file });
+        const convertFile = await toBase64(file);
+        changeDetails({ ...details, image: convertFile });
     };
     
    return (

@@ -2,7 +2,7 @@ import Auth from '../utils/auth';
 import { QUERY_USER, QUERY_CRITERIA } from '../utils/queries';
 import { useLazyQuery, useQuery } from '@apollo/client';
 import { criteriaData } from '../utils/criteriaData';
-import { GetDate } from '../utils/helper';
+import { GetDate, measureDistance } from '../utils/helper';
 import { useState } from 'react';
 
 import { TagSectionsCSS } from '../css/tagsSections';
@@ -20,12 +20,17 @@ export const ManageAlerts = ({ setCriteriaState }) => {
         window.location.assign("/");
     }
 
-    const [getCriteria] = useLazyQuery(QUERY_CRITERIA);
+    const [getCriteria, { error: newCriteriaError }] = useLazyQuery(QUERY_CRITERIA);
 
     const [alertSettings, changeCriteria] = useState({
         criteria: "",
-        criteriaData: []
-    })
+        locationSet: false,
+        currentPosition: false,
+        distance: "",
+        distanceConfirmed: false,
+        criteriaData: [],
+        staticCriteriaData: []
+    });
 
     // CSS only
     const isMedium = useMediaQuery('(min-width: 900px)');
@@ -36,29 +41,109 @@ export const ManageAlerts = ({ setCriteriaState }) => {
         return 
     } else if (loading) {
         return <div>Loading data</div>
-    }
+    };
  
     const handleChange = async (e) => {
 
         const newCriteria = e.target.value.replace("alert", "");
-       
+      
+        if (newCriteria === "No selections") {
+            changeCriteria({
+                criteria: "",
+                locationSet: false,
+                currentPosition: false,
+                distance: "",
+                criteriaData: [],
+                staticCriteriaData: []
+            });
+            return
+        }
+        
         const newCriData = await getCriteria({
             variables: { criteria: newCriteria }
         });
+        newCriteriaError && console.log(newCriteriaError);
 
         changeCriteria({
             ...alertSettings,
             criteria: e.target.value,
-            criteriaData: newCriData.data.getCriteria
+            criteriaData: newCriData.data.getCriteria,
+            staticCriteriaData: newCriData.data.getCriteria
         });
-
-        
-    }
-  
+    };
+ 
     const setCriteria = () => {
         localStorage.setItem("userCriteria", JSON.stringify(alertSettings.criteriaData));
         window.location.assign("/dashboard");
+    };
+
+    const changeDistance = (event) => {
+        const { name, value } = event.target;
+        changeCriteria({
+          ...alertSettings,
+          [name]: value,
+        });
+    };
+    const confirmDistance = () => {
+        // Manage distance info
+        const distanceMod = alertSettings.staticCriteriaData.filter(item => {
+            const itemCoords = {
+                lat: item.lat,
+                lng: item.lng
+            };
+            const setCoords = {
+                lat: alertSettings.lat,
+                lng: alertSettings.lng
+            }
+            return measureDistance(itemCoords, setCoords, alertSettings.distance)
+        });
+  
+        changeCriteria({
+            ...alertSettings,
+            criteriaData: distanceMod,
+            distanceConfirmed: true
+        });
     }
+
+    const changeCoords = (event, current) => {
+
+        if (current) {
+            navigator.geolocation.getCurrentPosition(
+                (e) => {
+                    if (e.coords.latitude) {
+                        changeCriteria({
+                            ...alertSettings,
+                            lat: e.coords.latitude,
+                            lng: e.coords.longitude,
+                            locationSet: true
+                        });
+                        document.querySelector("#latitude").value = e.coords.latitude
+                        document.querySelector("#longitude").value = e.coords.longitude
+                    } else {
+                        document.querySelector("#useCurLoc").innerHTML = "Location disallowed";
+                        setTimeout(() => {
+                            document.querySelector("#useCurLoc").innerHTML = "Use current location";
+                        }, 2000)
+                    }
+                }
+            )
+        };
+
+        if (event.target) {
+            const { name, value } = event.target;
+          
+            changeCriteria({
+                ...alertSettings,
+                [name]: value,
+            });
+            if (alertSettings.loc && alertSettings.lng) {
+                changeCriteria({
+                    ...alertSettings,
+                    locationSet: true
+                });
+            };
+        };
+    };
 
     return (
         <section id='manageAlertsPage' style={TagSectionsCSS.management.managementSection}>
@@ -69,7 +154,7 @@ export const ManageAlerts = ({ setCriteriaState }) => {
                     </div>
                     <div id='selectAlertCriteria' style={TagSectionsCSS.management.confirmations}>
                         <label htmlFor='alertsCriteria'>Select Criteria</label>
-                        <select style={TagSectionsCSS.management.options} id='alertsCriteria' onChange={(e) => handleChange(e)}>
+                        <select style={TagSectionsCSS.management.options} id='alertsCriteria' onChange={handleChange}>
                             <option>No selections</option>
                             {criteriaData.map((criteria) => {
                                 let subString = criteria[0].toUpperCase() + criteria.substring(1);
@@ -79,17 +164,72 @@ export const ManageAlerts = ({ setCriteriaState }) => {
                             })};
                         </select>
                     </div>
-                    <div style={TagSectionsCSS.management.confirmations}>
-                        <p style={TagSectionsCSS.management.yellowStyle}><AiOutlineWarning /> Criteria: </p>
-                        <p style={TagSectionsCSS.management.yellowStyle}>{alertSettings.criteria[0] && alertSettings.criteria[0].toUpperCase() + alertSettings.criteria.replace("alert", "").substring(1)}</p>
-                    </div>
-                    <div style={TagSectionsCSS.management.confirmations}>
-                        <p>Number of issues: </p>
-                        <p>{alertSettings.criteriaData.length} issues</p>
-                    </div>
-                    <div>
-                        <button style={Button.blue} onClick={setCriteria}>Set Criteria</button>
-                    </div>
+                    
+                    {alertSettings.criteria && (
+                        <>
+                            <div style={TagSectionsCSS.management.confirmations}>
+                                <p style={TagSectionsCSS.management.yellowStyle}><AiOutlineWarning /> Criteria: </p>
+                                <p style={TagSectionsCSS.management.yellowStyle}>{alertSettings.criteria[0] && alertSettings.criteria[0].toUpperCase() + alertSettings.criteria.replace("alert", "").substring(1)}</p>
+                            </div>
+                        </>
+                    )}
+
+                    {alertSettings.criteria && (
+                        <>
+                            <div style={TagSectionsCSS.management.titles}>
+                                <h2>Set location</h2>
+                            </div>
+
+                            <div style={TagSectionsCSS.management.confirmations}>
+                                <input onChange={changeCoords} id="latitude" name='lat' type="number" placeholder='latitude..'
+                                style={TagSectionsCSS.management.options}></input>
+                                <input onChange={changeCoords} id="longitude" name='lng' type="number" placeholder='longitude..'
+                                style={TagSectionsCSS.management.options}></input>
+                            </div>
+
+                            <div style={TagSectionsCSS.management.titles}>
+                                <button id='useCurLoc' style={Button.smallBlue} onClick={(e) => changeCoords(e, true)}>Use current location</button>
+                            </div>
+                        </>
+                    )}
+
+                    {alertSettings.locationSet && (
+                        <>
+                            <div title='distance from your location' style={TagSectionsCSS.management.confirmations}>
+                                <p>Set distance for notifications</p>
+                                <div>
+                                    <label htmlFor='distanceFrom'></label>
+                                    <input 
+                                        style={TagSectionsCSS.management.options} 
+                                        type="number" 
+                                        placeholder='"124 ( kms )"'
+                                        name='distance'
+                                        onChange={changeDistance}></input>
+                                </div>
+                            </div>
+                            {alertSettings.distance && (
+                                <div style={TagSectionsCSS.management.titles}>
+                                    <button style={Button.smallBlue} onClick={confirmDistance}>Confirm Distance</button>
+                                </div>
+                            )}
+                        </>
+                    )}
+
+                    {alertSettings.distance && (
+                        <>
+                            <div style={TagSectionsCSS.management.confirmations}>
+                                <p>Number of issues: </p>
+                                <p>{alertSettings.criteriaData.length} issues</p>
+                            </div>
+
+                            {alertSettings.distanceConfirmed && (
+                                <div>
+                                    <button style={Button.blue} onClick={setCriteria}>Set Criteria</button>
+                                </div>
+                            )}
+                        </>
+                    )}
+                    
                     
                 </article>
                 
