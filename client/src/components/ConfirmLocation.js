@@ -12,7 +12,7 @@ export const ConfirmLocation = ({marker}) => {
         console.log(address)
         return address
     })
-console.log(address)
+console.log(address.current())
     const errorMessage = () => {
         const span = document.querySelector("#locErrorMessage");
         span.innerHTML = "Access Site to login";
