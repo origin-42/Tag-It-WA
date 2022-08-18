@@ -87,7 +87,7 @@ export const Report = () => {
                 lat: e.latLng.lat(),
                 lng: e.latLng.lng(),
                 date: Date.now(),
-                address: address
+                address
             });
         };
     };
