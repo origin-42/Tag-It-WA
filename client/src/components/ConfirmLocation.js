@@ -1,8 +1,8 @@
 import Auth from '../utils/auth';
 import { Button } from '../css/button';
 
-export const ConfirmLocation = ({address}) => {
- 
+export const ConfirmLocation = (marker) => {
+ console.log(marker)
     const errorMessage = () => {
         const span = document.querySelector("#locErrorMessage");
         span.innerHTML = "Access Site to login";
@@ -12,7 +12,7 @@ export const ConfirmLocation = ({address}) => {
     };
 
     const confirmLoc = () => {
-        if (address === "WA") {
+        if (marker.address === "WA") {
             window.location.assign("/Issues");
         } else {
             alert("Address not in WA");
