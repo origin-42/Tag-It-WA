@@ -20,7 +20,7 @@ export const AltUserTag = () => {
 
     const [commentSection, showCommentSec] = useState(false);
 
-    const { loading, error, data } = useQuery(QUERY_TAG, {
+    const { loading, error, data, refetch } = useQuery(QUERY_TAG, {
         variables: { _id: newQuery }
     });
     
@@ -68,6 +68,7 @@ export const AltUserTag = () => {
             description: ""
         });
         showCommentSec(false);
+        refetch();
     }
 
     const changeComment = (event) => {
@@ -101,7 +102,7 @@ export const AltUserTag = () => {
     
     const { lat, lng, criteria, date, confirmed, denied, description, comments, user } = data.tag;
     const subString = criteria[0].toUpperCase() + criteria.substring(1);
-    console.log(data.tag)
+ console.log(comments)
     return (
         <section id='alertsSection' style={TagSectionsCSS.alerts.alertsSection}>
             <section id='alertsWrapper' style={isMedium? TagSectionsCSS.alerts.alertsWrapper: TagSectionsCSS.alerts.alertsWrapperMd}>

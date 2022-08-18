@@ -1,3 +1,6 @@
+import { googleMapCSS } from '../../css/googleMap';
+import { Button } from '../../css/button';
+
 export const PanTo = ({initialCoords, setMarker}) => {
 
     const panView = () => {
@@ -5,8 +8,13 @@ export const PanTo = ({initialCoords, setMarker}) => {
     }
 
     return (
-        <button
-        onClick={panView}
-        >Re-center</button>
+        <div style={googleMapCSS.panTo}>
+            <button
+            style={Button.blue}
+            onClick={panView}
+            >Re-center
+            </button>
+        </div>
+        
     )
 }

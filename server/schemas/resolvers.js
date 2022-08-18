@@ -11,7 +11,7 @@ const resolvers = {
         user: async (parent, args, context) => {
            
             if (context.user) {
-              const user = await Users.findById(context.user._id).populate('tags').populate('comments');
+              const user = await Users.findById(context.user._id).populate("tags").populate('comments');
                 
               return user;
             }

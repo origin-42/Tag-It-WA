@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { googleMapCSS } from '../css/googleMap';
 import { ConfirmLocation } from '../components/ConfirmLocation';
 import { SpeechBubbles } from '../css/speechBubbles';
-
+import { Button } from '../css/button';
 
 import { convertAddress } from '../utils/helper';
 
@@ -26,11 +26,11 @@ const mapConfig = {
         width: "100%",
         height: "100%"
     }
-}
+};
 
 const circleConfig = {
     strokeColor: '#FF0000'
-}
+};
 
 export const Report = () => {
 
@@ -41,10 +41,11 @@ export const Report = () => {
     const [marker, setMarker] = useState({ lat: -31.932012253587, lng: 115.85712796810994 });
     const [initialCoords, setInitialCoords] = useState({ lat: -31.932012253587, lng: 115.85712796810994 });
     const [markerCoords, setMarkers] = useState(false);
-    const [circleInfo, setCircleInfo] = useState({})
+    const [circleInfo, setCircleInfo] = useState({});
 
     // CSS only
     const isLarge = useMediaQuery('(min-width: 1500px)');
+    const isSmall = useMediaQuery('(min-width: 500px)');
 
     const mapRef = useRef();
     const onMapLoad = useCallback((map) => {
@@ -63,7 +64,7 @@ export const Report = () => {
                     lng: e.coords.longitude
                 });
             }
-        )
+        );
     };
     
     useEffect(() => {
@@ -83,7 +84,7 @@ export const Report = () => {
         streetViewControl: false,
         fullscreenControl: false
     }
-console.log(marker)
+
     const handleClick = async (e) => {
         if (e.latLng.lat && e.latLng.lng) {
             const reponse = await Geocode.fromLatLng(e.latLng.lat(), e.latLng.lng());
@@ -107,7 +108,7 @@ console.log(marker)
                         <div style={SpeechBubbles.speechBox}>Click to drop a pin</div>
                     </article>
 
-                    <article id="map" style={googleMapCSS.googleMap}>
+                    <article id="map" style={isSmall? googleMapCSS.googleMap : googleMapCSS.smallGoogleMap}>
                         <GoogleMap 
                             center={marker}
                             zoom={13}
@@ -136,7 +137,9 @@ console.log(marker)
 
                         </GoogleMap>
 
-                        <button onClick={() => markerCoords? setMarkers(false): setMarkers(true)}>Show Neaby Issues</button>
+                        <div style={googleMapCSS.neabyIssues}>
+                            <button style={Button.blue} onClick={() => markerCoords? setMarkers(false): setMarkers(true)}>Show Neaby Issues</button>
+                        </div>
                         <PanTo initialCoords={initialCoords} setMarker={setMarker} />
                     </article>
 

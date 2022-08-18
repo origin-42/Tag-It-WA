@@ -72,6 +72,10 @@ export const QUERY_CRITERIA = gql`
                     username
                 }
             }
+            user {
+                _id
+                username
+            }
         }
     }
 `;

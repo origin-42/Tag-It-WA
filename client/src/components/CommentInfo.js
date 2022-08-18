@@ -20,7 +20,7 @@ export const CommentInfo = () => {
 
     const [commentSection, showCommentSec] = useState(false);
 
-    const { loading, error, data } = useQuery(QUERY_TAG, {
+    const { loading, error, data, refetch } = useQuery(QUERY_TAG, {
         variables: { _id: newQuery }
     });
 
@@ -62,6 +62,7 @@ export const CommentInfo = () => {
             description: ""
         });
         showCommentSec(false);
+        refetch();
     }
     
     if (error) {

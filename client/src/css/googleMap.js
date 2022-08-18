@@ -25,6 +25,24 @@ export const googleMapCSS = {
         borderRadius: "15px",
         position: "relative"
     },
+    smallerGoogleMap: {
+        display: "flex",
+        width: "40rem",
+        height: "600px",
+        border: "10px groove blue",
+        boxShadow: "0 0 4px 2px black",
+        borderRadius: "15px",
+        position: "relative"
+    },
+    smallGoogleMap: {
+        display: "flex",
+        width: "20rem",
+        height: "600px",
+        border: "10px groove blue",
+        boxShadow: "0 0 4px 2px black",
+        borderRadius: "15px",
+        position: "relative"
+    },
     googleMapSearch: {
         position: "absolute",
         content: "",
@@ -51,5 +69,14 @@ export const googleMapCSS = {
     speechContainerLg: {
         display: "flex",
         justifyContent: "space-between"
+    },
+    neabyIssues: {
+        position: "absolute",
+        alignSelf: "end",
+        padding: "10px"
+    },
+    panTo: {
+        position: "absolute",
+        padding: "10px"
     }
 }

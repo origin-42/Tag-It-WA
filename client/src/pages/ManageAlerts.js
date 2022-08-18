@@ -1,6 +1,6 @@
 import Auth from '../utils/auth';
-import { QUERY_USER, QUERY_CRITERIA } from '../utils/queries';
-import { useLazyQuery, useQuery } from '@apollo/client';
+import { QUERY_CRITERIA } from '../utils/queries';
+import { useLazyQuery } from '@apollo/client';
 import { criteriaData } from '../utils/criteriaData';
 import { GetDate, measureDistance } from '../utils/helper';
 import { useState } from 'react';
@@ -14,11 +14,11 @@ import { useMediaQuery } from "../utils/useMediaQuery";
 import { BsPersonCircle } from 'react-icons/bs';
 import { AiOutlineWarning, AiFillMessage } from 'react-icons/ai';
 
-export const ManageAlerts = ({ setCriteriaState }) => {
+export const ManageAlerts = () => {
     if (!Auth.loggedIn()) {
         alert("Please login")
         window.location.assign("/");
-    }
+    };
 
     const [getCriteria, { error: newCriteriaError }] = useLazyQuery(QUERY_CRITERIA);
 
@@ -34,14 +34,6 @@ export const ManageAlerts = ({ setCriteriaState }) => {
 
     // CSS only
     const isMedium = useMediaQuery('(min-width: 900px)');
-    
-    const { loading, error } = useQuery(QUERY_USER);
-    if (error) {
-        alert("Error")
-        return 
-    } else if (loading) {
-        return <div>Loading data</div>
-    };
  
     const handleChange = async (e) => {
 
