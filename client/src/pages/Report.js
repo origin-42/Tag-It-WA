@@ -83,14 +83,15 @@ export const Report = () => {
         if (e.latLng.lat && e.latLng.lng) {
             const reponse = await Geocode.fromLatLng(e.latLng.lat(), e.latLng.lng());
             const address = reponse.results[0].formatted_address;
-            console.log(address)
+            console.log(reponse.results[0])
+            console.log(reponse)
             setMarker({
                 lat: e.latLng.lat(),
                 lng: e.latLng.lng(),
                 date: Date.now(),
                 address: address
-            })
-        }
+            });
+        };
     };
     
     return (
