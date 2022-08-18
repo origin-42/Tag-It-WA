@@ -83,7 +83,7 @@ export const Report = () => {
         streetViewControl: false,
         fullscreenControl: false
     }
-
+console.log(marker)
     const handleClick = async (e) => {
         if (e.latLng.lat && e.latLng.lng) {
             const reponse = await Geocode.fromLatLng(e.latLng.lat(), e.latLng.lng());
