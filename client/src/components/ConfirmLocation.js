@@ -8,11 +8,12 @@ const APIKEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 export const ConfirmLocation = ({marker}) => {
 
     const address = useRef(async () => {
-        const address = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${marker.lat},${marker.lng}&key=${APIKEY}`);
-        console.log(address)
-        return address
+        const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${marker.lat},${marker.lng}&key=${APIKEY}`);
+        const data = await response.json()
+        return data
     })
-console.log(address.current())
+console.log(address)
+
     const errorMessage = () => {
         const span = document.querySelector("#locErrorMessage");
         span.innerHTML = "Access Site to login";
