@@ -21,11 +21,11 @@ export const ConfirmLocation = ({address}) => {
     return (
         Auth.loggedIn()? (
             <div id="locationSelection" style={Button.reportButton}>
-                    <span>{<button onClick={confirmLoc}>Confirm Location?</button>}</span>
+                <button onClick={confirmLoc}>Confirm Location?</button>
             </div>
         ) : (
             <div id="locationSelection" style={Button.reportButton}>
-                <span id='locErrorMessage' onClick={errorMessage}>Confirm Location?</span>
+                <button id='locErrorMessage' onClick={errorMessage}>Confirm Location?</button>
             </div>
         )
     );
