@@ -4,7 +4,7 @@ import { ConfirmLocation } from '../components/ConfirmLocation';
 import { SpeechBubbles } from '../css/speechBubbles';
 
 // Map components
-import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
+import { GoogleMap, useJsApiLoader, Marker, geocoder } from '@react-google-maps/api';
 import { PanTo } from '../components/ReportPage/panTo';
 import { Markers } from '../components/ReportPage/Markers';
 import { Circle } from '@react-google-maps/api';
@@ -79,16 +79,15 @@ export const Report = () => {
 
     const handleClick = async (e) => {
         if (e.latLng.lat && e.latLng.lng) {
-            const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${e.latLng.lat()},${e.latLng.lng()}&key=${APIKEY}`);
-            const data = await response.json()
-            console.log(data.results[0].formatted_address)
+            const address = geocoder.geocode({ lat: e.latLng.lat(), lng: e.latLng.lng() });
+            console.log(address)
             setMarker({
                 lat: e.latLng.lat(),
                 lng: e.latLng.lng(),
                 date: Date.now()
             })
         }
-    }
+    };
     
     return (
         <section id="report" style={isLarge ? googleMapCSS.reportSection : googleMapCSS.reportSectionLg}>

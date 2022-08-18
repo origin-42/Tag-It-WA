@@ -8,8 +8,8 @@ export const ConfirmLocation = () => {
         span.innerHTML = "Access Site to login";
         setTimeout(() => {
             span.innerHTML = "Confirm Location?";
-        }, 2000)
-    }
+        }, 2000);
+    };
     
     return (
         Auth.loggedIn()? (
@@ -21,5 +21,5 @@ export const ConfirmLocation = () => {
                 <span id='locErrorMessage' onClick={errorMessage}>Confirm Location?</span>
             </div>
         )
-    )
-}
+    );
+};
