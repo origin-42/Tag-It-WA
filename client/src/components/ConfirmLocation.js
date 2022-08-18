@@ -2,6 +2,7 @@ import Auth from '../utils/auth';
 import { Button } from '../css/button';
 
 export const ConfirmLocation = ({address}) => {
+    console.log(address)
     const errorMessage = () => {
         const span = document.querySelector("#locErrorMessage");
         span.innerHTML = "Access Site to login";

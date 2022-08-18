@@ -87,8 +87,7 @@ export const Report = () => {
     const handleClick = async (e) => {
         if (e.latLng.lat && e.latLng.lng) {
             const reponse = await Geocode.fromLatLng(e.latLng.lat(), e.latLng.lng());
-            const address = convertAddress(reponse)
-            console.log(address)
+            const address = convertAddress(reponse);
             setMarker({
                 lat: e.latLng.lat(),
                 lng: e.latLng.lng(),
